@@ -63,6 +63,15 @@
   {% endif %}
   {{- block.shopify_attributes -}}
 >
+  {% if section.settings.header_phone != blank %}
+    <a
+      href="tel:{{ section.settings.header_phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-' }}"
+      class="header-actions__action header-phone mobile:hidden"
+    >
+      {{ section.settings.header_phone }}
+    </a>
+  {% endif %}
+
   {% if shop.customer_accounts_enabled %}
     {% liquid
       assign account_actions_style = ''
@@ -143,7 +152,46 @@
     role="status"
     data-testid="cart-count-live-region"
   ></span>
+
+  {% if section.settings.header_quote_label != blank %}
+    <a
+      href="{{ section.settings.header_quote_link | default: routes.root_url }}"
+      class="header-quote-button mobile:hidden"
+    >
+      {{ section.settings.header_quote_label }}
+    </a>
+  {% endif %}
 </header-actions>
+
+{% stylesheet %}
+  .header-phone {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .header-quote-button {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    background: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+    font-family: var(--font-subheading--family);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.7rem 1.35rem;
+    border-radius: var(--style-border-radius-buttons-primary);
+    text-decoration: none;
+    margin-inline-start: 0.35rem;
+  }
+
+  .header-quote-button:hover {
+    background: var(--color-primary-button-hover-background);
+    color: var(--color-primary-button-hover-text);
+  }
+{% endstylesheet %}
 
 <script
   type="module"
