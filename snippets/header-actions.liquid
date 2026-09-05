@@ -57,18 +57,26 @@
   </svg>
 {% endcapture %}
 
+{%- liquid
+  # Fall back to the store's own details so these render even before the
+  # header section's settings are available; the settings win when set.
+  assign gb_phone = section.settings.header_phone | default: '(877) 671-6045'
+  assign gb_quote_label = section.settings.header_quote_label | default: 'Get a Quote'
+  assign gb_quote_link = section.settings.header_quote_link | default: '/pages/contact'
+-%}
+
 <header-actions
   {% if display_style == 'text' %}
     class="header-actions--text"
   {% endif %}
   {{- block.shopify_attributes -}}
 >
-  {% if section.settings.header_phone != blank %}
+  {% if gb_phone != blank %}
     <a
-      href="tel:{{ section.settings.header_phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-' }}"
+      href="tel:{{ gb_phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-' }}"
       class="header-actions__action header-phone mobile:hidden"
     >
-      {{ section.settings.header_phone }}
+      {{ gb_phone }}
     </a>
   {% endif %}
 
@@ -153,12 +161,12 @@
     data-testid="cart-count-live-region"
   ></span>
 
-  {% if section.settings.header_quote_label != blank %}
+  {% if gb_quote_label != blank %}
     <a
-      href="{{ section.settings.header_quote_link | default: routes.root_url }}"
+      href="{{ gb_quote_link }}"
       class="header-quote-button mobile:hidden"
     >
-      {{ section.settings.header_quote_label }}
+      {{ gb_quote_label }}
     </a>
   {% endif %}
 </header-actions>
