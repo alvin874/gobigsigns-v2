@@ -1,0 +1,67 @@
+{% liquid
+  assign tldr = article.metafields.custom.tldr.value
+%}
+
+{% if tldr != blank %}
+  <div class="article-tldr" {{ block.shopify_attributes }}>
+    <p class="article-tldr__label">{{ block.settings.label | default: 'Key takeaways' }}</p>
+    <ul class="article-tldr__list">
+      {% for item in tldr %}
+        <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .article-tldr {
+    max-width: var(--normal-content-width);
+    margin: 0 auto 32px;
+    background: var(--color-background-secondary, #f8f7f5);
+    border-left: 4px solid var(--color-accent, #E64A08);
+    padding: 20px 24px;
+    border-radius: 0;
+  }
+
+  .article-tldr__label {
+    font-family: var(--font-subheading--family);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+  }
+
+  .article-tldr__list {
+    margin: 0;
+    padding-inline-start: 1.1em;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Key takeaways (TL;DR)",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Key takeaways"
+    },
+    {
+      "type": "paragraph",
+      "content": "Reads a list metafield at custom.tldr on the article (array of short strings). Renders nothing if that metafield is blank."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Key takeaways (TL;DR)",
+      "category": "t:categories.blog_post"
+    }
+  ]
+}
+{% endschema %}
