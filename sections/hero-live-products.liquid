@@ -66,6 +66,15 @@
     background: var(--color-background-secondary, #f8f7f5);
   }
 
+  /* Fill the grid cleanly whatever the collection holds: a lone tile,
+     or a third tile with no partner, spans the full width instead of
+     leaving a gap. */
+  .gb-hero-live__tile:nth-child(1):last-child,
+  .gb-hero-live__tile:nth-child(3):last-child {
+    grid-column: span 2;
+    aspect-ratio: 2 / 1;
+  }
+
   .gb-hero-live__img {
     width: 100%;
     height: 100%;
