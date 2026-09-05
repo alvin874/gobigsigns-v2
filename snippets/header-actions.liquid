@@ -163,6 +163,12 @@
   {% endif %}
 </header-actions>
 
+<script
+  type="module"
+  src="{{ 'header-actions.js' | asset_url }}"
+  fetchpriority="low"
+></script>
+
 {% stylesheet %}
   .header-phone {
     font-size: 0.8125rem;
@@ -191,15 +197,7 @@
     background: var(--color-primary-button-hover-background);
     color: var(--color-primary-button-hover-text);
   }
-{% endstylesheet %}
 
-<script
-  type="module"
-  src="{{ 'header-actions.js' | asset_url }}"
-  fetchpriority="low"
-></script>
-
-{% stylesheet %}
   .header {
     --account-offset-top: calc(
       var(--header-group-height) + (var(--header-height) * var(--transparent-header-offset-boolean))
