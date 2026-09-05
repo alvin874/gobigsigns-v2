@@ -10,7 +10,6 @@
   if hero_collection == blank
     assign hero_collection = collections.all
   endif
-  assign hero_products = hero_collection.products | slice: 0, 4
 %}
 
 {% render 'contrast-override', background_color: section.settings.background_color, section_id: section.id %}
@@ -25,9 +24,9 @@
       {% content_for 'blocks' %}
     </div>
     <div class="gb-hero-live__grid">
-      {% for product in hero_products %}
+      {% for product in hero_collection.products limit: 4 %}
         <a href="{{ product.url }}" class="gb-hero-live__tile">
-          {% render 'image', image: product.featured_image, height: 400, class: 'gb-hero-live__img', alt_text_fallback: product.title %}
+          {% render 'image', image: product.featured_image, height: 500, class: 'gb-hero-live__img', alt_text_fallback: product.title %}
         </a>
       {% endfor %}
     </div>
