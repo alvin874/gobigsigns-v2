@@ -118,7 +118,7 @@
                   {% render 'cart-summary', section_id: 'cart-drawer-section' %}
                   <p class="cart-drawer__trust-line">
                     <span class="svg-wrapper">{{- 'icon-checkmark.svg' | inline_asset_content -}}</span>
-                    Free proof, made to order in the USA. Ships in 5-7 days, free over $200.
+                    Free proof, made to order in {% render 'market-terms', term: 'origin' %}. Ships in 5-7 days, free over $200.
                   </p>
                 </div>
               </scroll-hint>

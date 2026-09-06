@@ -1,0 +1,49 @@
+{%- doc -%}
+  Country-aware wording for the storefront's current market.
+
+  Products are sourced from wholesalers in both countries, so Canadian
+  customers genuinely receive Canadian-made goods. Rather than repeating
+  that conditional everywhere, this snippet resolves the market once and
+  echoes the requested phrase. Every other market falls back to the US
+  wording, which is this store's established default.
+
+  @param {string} term - which phrase to output:
+    origin     -> "the USA"        / "Canada"
+    inventory  -> "US inventory"   / "Canadian inventory"
+    country    -> "United States"  / "Canada"
+    delivery   -> "Nationwide"     / "Canada-wide"
+
+  @example
+  <p>Made to order in {% render 'market-terms', term: 'origin' %}.</p>
+{%- enddoc -%}
+
+{%- liquid
+  assign country = localization.country.iso_code | default: 'US'
+
+  case term
+    when 'origin'
+      if country == 'CA'
+        echo 'Canada'
+      else
+        echo 'the USA'
+      endif
+    when 'inventory'
+      if country == 'CA'
+        echo 'Canadian inventory'
+      else
+        echo 'US inventory'
+      endif
+    when 'country'
+      if country == 'CA'
+        echo 'Canada'
+      else
+        echo 'United States'
+      endif
+    when 'delivery'
+      if country == 'CA'
+        echo 'Canada-wide'
+      else
+        echo 'Nationwide'
+      endif
+  endcase
+-%}
