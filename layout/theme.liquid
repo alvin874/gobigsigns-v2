@@ -12,6 +12,12 @@
         type="image/png"
         href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
       >
+    {%- else -%}
+      {%- comment -%}
+        No favicon uploaded in theme settings: fall back to the brand mark
+        shipped with the theme so the tab is never blank.
+      {%- endcomment -%}
+      <link rel="icon" type="image/svg+xml" href="{{ 'favicon.svg' | asset_url }}">
     {%- endif -%}
 
     {%- render 'view-transition-opt-in' -%}

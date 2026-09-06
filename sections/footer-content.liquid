@@ -1,0 +1,312 @@
+{%- doc -%}
+  Footer trust strip and main grid, ported from the v1 theme's
+  layout/gobig.liquid. The copyright / policy / social bar below it is
+  Horizon's own footer-utilities section.
+{%- enddoc -%}
+
+{%- liquid
+  assign icon = 'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"'
+-%}
+
+<div class="gb-footer">
+  <div class="gb-footer__trust">
+    <div class="gb-footer__trust-item">
+      <div class="gb-footer__trust-icon">
+        <svg viewBox="0 0 24 24" {{ icon }} aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+      </div>
+      <div class="gb-footer__trust-text"><strong>100% Print Guarantee</strong>Quality checked before dispatch</div>
+    </div>
+    <div class="gb-footer__trust-item">
+      <div class="gb-footer__trust-icon">
+        <svg viewBox="0 0 24 24" {{ icon }} aria-hidden="true"><path d="M12 19l7-7 3 3-7 7-3-3Z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5Z"/><path d="M2 2l7.6 7.6"/><circle cx="11" cy="11" r="2"/></svg>
+      </div>
+      <div class="gb-footer__trust-text"><strong>Design Services Available</strong>Expert artwork help on every order</div>
+    </div>
+    <div class="gb-footer__trust-item">
+      <div class="gb-footer__trust-icon">
+        <svg viewBox="0 0 24 24" {{ icon }} aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8Z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      </div>
+      <div class="gb-footer__trust-text"><strong>Free Shipping $200+</strong>Nationwide delivery</div>
+    </div>
+    <div class="gb-footer__trust-item">
+      <div class="gb-footer__trust-icon">
+        <svg viewBox="0 0 24 24" {{ icon }} aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+      </div>
+      <div class="gb-footer__trust-text"><strong>Expert Support</strong>Mon–Fri, 9am–5pm EST</div>
+    </div>
+  </div>
+
+  <div class="gb-footer__main">
+    <div class="gb-footer__brand">
+      <div class="gb-footer__logo">
+        <span class="gb-footer__logo-mark" aria-hidden="true"></span>
+        GO BIG <em>Signs</em>
+      </div>
+      <p class="gb-footer__desc">{{ section.settings.footer_blurb }}</p>
+      <div class="gb-footer__contact-row">
+        <svg viewBox="0 0 24 24" {{ icon }} aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+        <a href="tel:+18776716045">(877) 671-6045</a>
+      </div>
+      <div class="gb-footer__contact-row">
+        <svg viewBox="0 0 24 24" {{ icon }} aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+        <a href="mailto:info@gobigsigns.com">info@gobigsigns.com</a>
+      </div>
+      <div class="gb-footer__contact-row">
+        <svg viewBox="0 0 24 24" {{ icon }} aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        United States
+      </div>
+    </div>
+
+    <div>
+      <div class="gb-footer__col-heading">Products</div>
+      <ul class="gb-footer__links">
+        <li><a href="{{ routes.collections_url }}/exhibition-booth-kits">Exhibition Booth Kits</a></li>
+        <li><a href="{{ routes.collections_url }}/pull-up-banners">Pull-Up Banners</a></li>
+        <li><a href="{{ routes.collections_url }}/seg-displays">SEG Fabric Displays</a></li>
+        <li><a href="{{ routes.collections_url }}/large-format-prints">Large Format Prints</a></li>
+        <li><a href="{{ routes.collections_url }}/custom-signs">Custom Signs</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">View All Products</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="gb-footer__col-heading">Company</div>
+      <ul class="gb-footer__links">
+        <li><a href="/pages/about">About Us</a></li>
+        <li><a href="/pages/contact">Contact</a></li>
+        <li><a href="/pages/faqs">FAQs</a></li>
+        <li><a href="/pages/learning-center">Learning Center</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="gb-footer__col-heading">Support</div>
+      <ul class="gb-footer__links">
+        <li><a href="/policies/shipping-policy">Shipping Policy</a></li>
+        <li><a href="/policies/refund-policy">Returns &amp; Refunds</a></li>
+        <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/policies/terms-of-service">Terms of Service</a></li>
+        <li><a href="/pages/contact">Get a Quote</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .gb-footer {
+    --gbf-navy: #0c1e3c;
+    --gbf-navy-mid: #14305e;
+    --gbf-orange: #e64a08;
+    --gbf-gutter: clamp(20px, 4vw, 64px);
+    --gbf-display: var(--font-heading--family);
+    --gbf-ui: var(--font-body--family);
+
+    background: var(--gbf-navy);
+    color: rgb(255 255 255 / 55%);
+  }
+
+  .gb-footer__trust {
+    background: var(--gbf-navy-mid);
+    padding: 22px var(--gbf-gutter);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgb(255 255 255 / 7%);
+  }
+
+  .gb-footer__trust-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .gb-footer__trust-icon {
+    width: 34px;
+    height: 34px;
+    background: rgb(230 74 8 / 15%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--gbf-orange);
+  }
+
+  .gb-footer__trust-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .gb-footer__trust-text {
+    font-family: var(--gbf-ui);
+    font-size: 12px;
+    font-weight: 600;
+    color: rgb(255 255 255 / 75%);
+  }
+
+  .gb-footer__trust-text strong {
+    display: block;
+    color: #fff;
+    font-size: 13px;
+  }
+
+  .gb-footer__main {
+    padding: 72px var(--gbf-gutter) 56px;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 56px;
+    border-bottom: 1px solid rgb(255 255 255 / 7%);
+  }
+
+  .gb-footer__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--gbf-display);
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 0.06em;
+    color: #fff;
+    margin-bottom: 18px;
+  }
+
+  .gb-footer__logo em {
+    color: var(--gbf-orange);
+    font-style: normal;
+  }
+
+  .gb-footer__logo-mark {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    background: var(--gbf-orange);
+    clip-path: polygon(0 0, 80% 0, 100% 50%, 80% 100%, 0 100%);
+  }
+
+  .gb-footer__desc {
+    font-family: var(--gbf-ui);
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgb(255 255 255 / 50%);
+    max-width: 260px;
+    margin: 0 0 24px;
+  }
+
+  .gb-footer__contact-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--gbf-ui);
+    font-size: 13px;
+    color: rgb(255 255 255 / 55%);
+    margin-bottom: 10px;
+    transition: color 0.2s;
+  }
+
+  .gb-footer__contact-row a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .gb-footer__contact-row:hover {
+    color: rgb(255 255 255 / 85%);
+  }
+
+  .gb-footer__contact-row svg {
+    width: 14px;
+    height: 14px;
+    color: var(--gbf-orange);
+    flex-shrink: 0;
+  }
+
+  .gb-footer__col-heading {
+    font-family: var(--gbf-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: rgb(255 255 255 / 28%);
+    margin-bottom: 22px;
+    text-transform: uppercase;
+  }
+
+  .gb-footer__links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .gb-footer__links a {
+    font-family: var(--gbf-ui);
+    font-size: 13px;
+    color: rgb(255 255 255 / 50%);
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+  }
+
+  .gb-footer__links a::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--gbf-orange);
+    border-radius: 50%;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .gb-footer__links a:hover {
+    color: rgb(255 255 255 / 85%);
+  }
+
+  .gb-footer__links a:hover::before {
+    opacity: 1;
+  }
+
+  @media screen and (max-width: 900px) {
+    .gb-footer__main {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .gb-footer__trust {
+      gap: 24px;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .gb-footer__main {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .gb-footer__trust {
+      justify-content: flex-start;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Footer content",
+  "tag": null,
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "footer_blurb",
+      "label": "Brand blurb",
+      "default": "Your trusted partner for professional signage and exhibition displays. Making brands impossible to ignore since 2009."
+    }
+  ]
+}
+{% endschema %}
