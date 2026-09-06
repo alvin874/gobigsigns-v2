@@ -1,0 +1,395 @@
+{%- doc -%}
+  Below-the-fold collection content, ported from the v1 theme's
+  templates/collection.liquid.
+
+  Renders the collection's custom.below_the_fold_content metafield when
+  it is set. That metafield is JSON: either a list of HTML strings (v1's
+  shape, each entry output in order) or a single HTML string. When it is
+  empty, the generic buying-guide copy and FAQ below are used instead, so
+  no collection is ever left with an empty band.
+{%- enddoc -%}
+
+{%- liquid
+  assign below_fold = collection.metafields.custom.below_the_fold_content.value
+-%}
+
+<div class="gbcoll-seo">
+  <div class="gbcoll-seo__inner">
+    <div class="gbcoll-seo__sidebar">
+      <div class="gbcoll-seo__label">{{ section.settings.sidebar_label }}</div>
+      <h2 class="gbcoll-seo__title">{{ section.settings.sidebar_title }}</h2>
+      <p class="gbcoll-seo__sidebar-text">{{ section.settings.sidebar_text }}</p>
+      <a href="{{ section.settings.sidebar_link | default: '/pages/contact' }}" class="gbcoll-seo__cta">
+        {{ section.settings.sidebar_cta }}
+      </a>
+    </div>
+
+    <div class="gbcoll-seo__content">
+      {%- if below_fold != blank -%}
+        {%- if below_fold.size > 0 and below_fold.first -%}
+          {%- for content_line in below_fold -%}
+            {{ content_line }}
+          {%- endfor -%}
+        {%- else -%}
+          {{ below_fold }}
+        {%- endif -%}
+      {%- else -%}
+        <h2>{{ collection.title }} — Professional Grade Displays</h2>
+        <p>
+          Whether you're exhibiting at a trade show, outfitting a retail environment, or running a branded event, our
+          <strong>{{ collection.title | downcase }}</strong> are engineered to deliver maximum visual impact with minimal
+          setup time. Every product ships with full hardware, carry bags where applicable, and is backed by our print
+          quality guarantee.
+        </p>
+
+        <h2>What to Look for When Buying {{ collection.title }}</h2>
+        <ul>
+          <li><strong>Print quality</strong> — Look for dye-sublimation or UV printing at 300dpi+ for sharp, vibrant results that won't pixelate at display size.</li>
+          <li><strong>Hardware durability</strong> — Powder-coated aluminum alloy frames handle repeated setup and breakdown across multiple events.</li>
+          <li><strong>Portability</strong> — Carry bag weight and pack-down size matters when you're shipping to events or flying to trade shows.</li>
+          <li><strong>Artwork compatibility</strong> — Confirm bleed requirements and accepted file formats before ordering to avoid production delays.</li>
+          <li><strong>Turnaround time</strong> — Standard production is 5–7 business days after artwork approval.</li>
+        </ul>
+
+        <h2>Artwork &amp; Print Specifications</h2>
+        <p>
+          All products in our <strong>{{ collection.title | downcase }}</strong> range are printed using premium inks on
+          commercial-grade substrates. Submit artwork in PDF, AI, EPS or high-resolution PNG (300dpi minimum). CMYK color
+          mode is preferred for accurate color matching. Templates are available on request — contact our team to get
+          started.
+        </p>
+
+        <div class="gbcoll-seo__faq">
+          <div class="gbcoll-seo__faq-item">
+            <button class="gbcoll-seo__faq-q" type="button" onclick="gbCollFaq(this)">
+              How long does production take? <span class="gbcoll-seo__faq-icon"></span>
+            </button>
+            <div class="gbcoll-seo__faq-a">
+              Standard production is 5–7 business days after artwork approval. Contact us if you have a tight deadline and we'll do our best to accommodate.
+            </div>
+          </div>
+          <div class="gbcoll-seo__faq-item">
+            <button class="gbcoll-seo__faq-q" type="button" onclick="gbCollFaq(this)">
+              Can I order a custom size? <span class="gbcoll-seo__faq-icon"></span>
+            </button>
+            <div class="gbcoll-seo__faq-a">
+              Yes. Most products in our range can be produced in custom dimensions. Contact us with your requirements and we'll provide a quote within 2 hours on business days.
+            </div>
+          </div>
+          <div class="gbcoll-seo__faq-item">
+            <button class="gbcoll-seo__faq-q" type="button" onclick="gbCollFaq(this)">
+              Do you offer bulk / volume pricing? <span class="gbcoll-seo__faq-icon"></span>
+            </button>
+            <div class="gbcoll-seo__faq-a">
+              Yes. We offer tiered pricing for volume orders. This is especially popular with marketing agencies, event companies and multi-location retailers. Request a quote through our contact page with your quantities.
+            </div>
+          </div>
+          <div class="gbcoll-seo__faq-item">
+            <button class="gbcoll-seo__faq-q" type="button" onclick="gbCollFaq(this)">
+              What file formats do you accept for artwork? <span class="gbcoll-seo__faq-icon"></span>
+            </button>
+            <div class="gbcoll-seo__faq-a">
+              We accept PDF, AI, EPS, PNG, and TIFF at 300dpi or higher. Color mode should be CMYK. Please include 3mm bleed on all sides and outline all fonts. Templates are available on request.
+            </div>
+          </div>
+          <div class="gbcoll-seo__faq-item">
+            <button class="gbcoll-seo__faq-q" type="button" onclick="gbCollFaq(this)">
+              Can I reprint graphics without replacing hardware? <span class="gbcoll-seo__faq-icon"></span>
+            </button>
+            <div class="gbcoll-seo__faq-a">
+              Absolutely. All our modular and fabric display systems are designed so graphics can be replaced independently of the hardware, saving you significant cost on rebrands and campaign updates.
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  function gbCollFaq(btn) {
+    var answer = btn.nextElementSibling;
+    var isOpen = btn.classList.toggle('open');
+    answer.classList.toggle('open', isOpen);
+  }
+</script>
+
+{% stylesheet %}
+  .gbcoll-seo {
+    --gbs-navy: #0c1e3c;
+    --gbs-orange: #e64a08;
+    --gbs-text-mid: #4a4a60;
+    --gbs-border: #e2ddd6;
+    --gbs-warm: #f8f7f5;
+    --gbs-display: var(--font-heading--family);
+    --gbs-ui: var(--font-body--family);
+
+    background: var(--gbs-warm);
+    border-top: 1px solid var(--gbs-border);
+    padding: 80px 48px;
+  }
+
+  .gbcoll-seo__inner {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .gbcoll-seo__sidebar {
+    position: sticky;
+    top: 120px;
+  }
+
+  .gbcoll-seo__label {
+    font-family: var(--gbs-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--gbs-orange);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+
+  .gbcoll-seo__label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--gbs-orange);
+    flex-shrink: 0;
+  }
+
+  .gbcoll-seo__title {
+    font-family: var(--gbs-display);
+    font-weight: 500;
+    font-size: clamp(40px, 4vw, 64px);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--gbs-navy);
+    margin: 0 0 24px;
+  }
+
+  .gbcoll-seo__sidebar-text {
+    font-size: 15px;
+    color: var(--gbs-text-mid);
+    line-height: 1.8;
+    margin: 0 0 28px;
+  }
+
+  .gbcoll-seo__cta {
+    font-family: var(--gbs-ui);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: #fff;
+    background: var(--gbs-orange);
+    padding: 14px 28px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s;
+    clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
+  }
+
+  .gbcoll-seo__cta:hover {
+    background: var(--gbs-navy);
+  }
+
+  .gbcoll-seo__content h2 {
+    font-family: var(--gbs-display);
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    color: var(--gbs-navy);
+    margin: 36px 0 14px;
+  }
+
+  .gbcoll-seo__content h2:first-child {
+    margin-top: 0;
+  }
+
+  .gbcoll-seo__content p {
+    font-size: 15px;
+    color: var(--gbs-text-mid);
+    line-height: 1.85;
+    margin: 0 0 20px;
+  }
+
+  .gbcoll-seo__content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+  }
+
+  .gbcoll-seo__content ul li {
+    font-size: 15px;
+    color: var(--gbs-text-mid);
+    line-height: 1.8;
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+
+  .gbcoll-seo__content ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 11px;
+    width: 6px;
+    height: 6px;
+    background: var(--gbs-orange);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
+
+  .gbcoll-seo__content strong {
+    color: var(--gbs-navy);
+    font-weight: 700;
+  }
+
+  .gbcoll-seo__content a {
+    color: var(--gbs-orange);
+  }
+
+  .gbcoll-seo__faq {
+    margin-top: 40px;
+    border-top: 1px solid var(--gbs-border);
+  }
+
+  .gbcoll-seo__faq-item {
+    border-bottom: 1px solid var(--gbs-border);
+  }
+
+  .gbcoll-seo__faq-q {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--gbs-ui);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--gbs-navy);
+    padding: 18px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.2s;
+  }
+
+  .gbcoll-seo__faq-q:hover {
+    color: var(--gbs-orange);
+  }
+
+  .gbcoll-seo__faq-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .gbcoll-seo__faq-icon::before,
+  .gbcoll-seo__faq-icon::after {
+    content: '';
+    position: absolute;
+    background: currentcolor;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  .gbcoll-seo__faq-icon::before {
+    width: 100%;
+    height: 1.5px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .gbcoll-seo__faq-icon::after {
+    width: 1.5px;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .gbcoll-seo__faq-q.open .gbcoll-seo__faq-icon::after {
+    opacity: 0;
+    transform: translateX(-50%) rotate(90deg);
+  }
+
+  .gbcoll-seo__faq-a {
+    font-size: 14px;
+    color: var(--gbs-text-mid);
+    line-height: 1.8;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s;
+  }
+
+  .gbcoll-seo__faq-a.open {
+    max-height: 400px;
+    padding-bottom: 20px;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .gbcoll-seo {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .gbcoll-seo__inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .gbcoll-seo__sidebar {
+      position: static;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection below-fold content",
+  "tag": "div",
+  "class": "collection-seo",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the collection's custom.below_the_fold_content metafield when set, otherwise the generic buying guide and FAQ."
+    },
+    {
+      "type": "text",
+      "id": "sidebar_label",
+      "label": "Sidebar eyebrow",
+      "default": "Expert Advice"
+    },
+    {
+      "type": "text",
+      "id": "sidebar_title",
+      "label": "Sidebar heading",
+      "default": "Need Help Choosing?"
+    },
+    {
+      "type": "textarea",
+      "id": "sidebar_text",
+      "label": "Sidebar text",
+      "default": "Our team works with marketing managers, event coordinators and trade show professionals daily. We'll recommend the right product for your budget, timeline and venue."
+    },
+    {
+      "type": "text",
+      "id": "sidebar_cta",
+      "label": "Sidebar button label",
+      "default": "Talk to an Expert"
+    },
+    {
+      "type": "url",
+      "id": "sidebar_link",
+      "label": "Sidebar button link"
+    }
+  ]
+}
+{% endschema %}
