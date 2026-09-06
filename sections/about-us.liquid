@@ -1,0 +1,775 @@
+{%- doc -%}
+  About page, ported from the v1 theme's templates/page.about-us.liquid.
+  Hero, mission + stat block, values, process, "why us" list, CTA banner.
+{%- enddoc -%}
+
+{%- liquid
+  assign icon_stroke = 'stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"'
+-%}
+
+<section class="gbabout-hero">
+  <div class="gbabout-hero__accent"></div>
+  <div class="gbabout-hero__inner">
+    <div class="gbabout-hero__breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a> › <span>{{ page.title | default: 'About Us' }}</span>
+    </div>
+    <div class="gbabout-hero__label">{{ section.settings.hero_label }}</div>
+    <h1 class="gbabout-hero__title">We Make<br><em>Brands</em><br>Impossible<br>To Ignore.</h1>
+    <p class="gbabout-hero__sub">{{ section.settings.hero_text }}</p>
+  </div>
+</section>
+
+<section class="gbabout-mission">
+  <div>
+    <div class="gbabout-mission__label">Who We Are</div>
+    <h2 class="gbabout-mission__title">Built for Brands That Demand Impact</h2>
+    <p class="gbabout-mission__text">Go Big Signs was founded with one goal: to make professional-grade display printing accessible to every business, from startups to enterprise. We believe your brand deserves to be seen at full scale — printed with precision, delivered on time, every time.</p>
+    <p class="gbabout-mission__text">Our team combines cutting-edge wide-format printing technology with genuine craftsmanship. Every order is checked, measured, and quality-reviewed before it leaves our facility.</p>
+  </div>
+  <div class="gbabout-mission__visual">
+    <div class="gbabout-mission__visual-grid"></div>
+    <div class="gbabout-mission__stat-grid">
+      <div class="gbabout-mission__stat">
+        <div class="gbabout-mission__stat-num">2400<span class="gbabout-mission__stat-suffix">+</span></div>
+        <div class="gbabout-mission__stat-label">Orders Completed</div>
+      </div>
+      <div class="gbabout-mission__stat">
+        <div class="gbabout-mission__stat-num">850<span class="gbabout-mission__stat-suffix">+</span></div>
+        <div class="gbabout-mission__stat-label">Happy Clients</div>
+      </div>
+      <div class="gbabout-mission__stat">
+        <div class="gbabout-mission__stat-num">15<span class="gbabout-mission__stat-suffix">+</span></div>
+        <div class="gbabout-mission__stat-label">Years Experience</div>
+      </div>
+      <div class="gbabout-mission__stat">
+        <div class="gbabout-mission__stat-num">48<span class="gbabout-mission__stat-suffix gbabout-mission__stat-suffix--sm">HR</span></div>
+        <div class="gbabout-mission__stat-label">Standard Turnaround</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gbabout-values">
+  <div class="gbabout-values__header">
+    <div class="gbabout-values__label">What We Stand For</div>
+    <h2 class="gbabout-values__title">Our Core Values</h2>
+  </div>
+  <div class="gbabout-values__grid">
+    <div class="gbabout-values__card">
+      <div class="gbabout-values__card-num">01</div>
+      <div class="gbabout-values__card-title">Quality Without Compromise</div>
+      <p class="gbabout-values__card-text">We use commercial-grade inks, premium substrates, and precision cutting on every single order — regardless of size. There's no "budget quality" here.</p>
+    </div>
+    <div class="gbabout-values__card">
+      <div class="gbabout-values__card-num">02</div>
+      <div class="gbabout-values__card-title">Speed You Can Count On</div>
+      <p class="gbabout-values__card-text">Deadlines are real. We've built our production workflow for efficiency — so your order ships on time, every time, without cutting corners on quality.</p>
+    </div>
+    <div class="gbabout-values__card">
+      <div class="gbabout-values__card-num">03</div>
+      <div class="gbabout-values__card-title">Your Brand, Perfectly Reproduced</div>
+      <p class="gbabout-values__card-text">Colour accuracy matters. We calibrate our printers regularly and offer free prepress checks to make sure your brand colours print exactly as intended.</p>
+    </div>
+  </div>
+</section>
+
+<section class="gbabout-process">
+  <div class="gbabout-process__header">
+    <div class="gbabout-process__label">How It Works</div>
+    <h2 class="gbabout-process__title">From Quote to Delivery in 4 Steps</h2>
+  </div>
+  <div class="gbabout-process__grid">
+    <div class="gbabout-process__step">
+      <div class="gbabout-process__step-num">01</div>
+      <div class="gbabout-process__step-icon">
+        <svg viewBox="0 0 24 24" {{ icon_stroke }} aria-hidden="true"><path d="M9 4h6v3H9z"/><path d="M15 5.5h3.5A1.5 1.5 0 0 1 20 7v12.5A1.5 1.5 0 0 1 18.5 21h-13A1.5 1.5 0 0 1 4 19.5V7a1.5 1.5 0 0 1 1.5-1.5H9"/><path d="M8.5 12h7M8.5 16h4"/></svg>
+      </div>
+      <div class="gbabout-process__step-title">Select &amp; Quote</div>
+      <p class="gbabout-process__step-text">Browse our product range and add to cart, or contact us for a custom project quote. Bulk pricing available for 5+ units.</p>
+    </div>
+    <div class="gbabout-process__step">
+      <div class="gbabout-process__step-num">02</div>
+      <div class="gbabout-process__step-icon">
+        <svg viewBox="0 0 24 24" {{ icon_stroke }} aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="1.5"/><path d="M3.5 15.5 8 11l4 4 3-2.5 5.5 4.5"/><circle cx="15.5" cy="8.5" r="1.5"/></svg>
+      </div>
+      <div class="gbabout-process__step-title">Submit Artwork</div>
+      <p class="gbabout-process__step-text">Upload your design files. Our team reviews every file for resolution, bleeds, and colour profiles before we press print.</p>
+    </div>
+    <div class="gbabout-process__step">
+      <div class="gbabout-process__step-num">03</div>
+      <div class="gbabout-process__step-icon">
+        <svg viewBox="0 0 24 24" {{ icon_stroke }} aria-hidden="true"><path d="M7 9V3.5h10V9"/><rect x="3.5" y="9" width="17" height="7" rx="1.5"/><path d="M7 14h10v6.5H7z"/></svg>
+      </div>
+      <div class="gbabout-process__step-title">We Produce</div>
+      <p class="gbabout-process__step-text">Your order enters production within hours of approval. Our facility runs high-output wide-format printing with full quality control.</p>
+    </div>
+    <div class="gbabout-process__step">
+      <div class="gbabout-process__step-num">04</div>
+      <div class="gbabout-process__step-icon">
+        <svg viewBox="0 0 24 24" {{ icon_stroke }} aria-hidden="true"><path d="M2.5 6.5h10v10h-10z"/><path d="M12.5 10h4l3 3v3.5h-7z"/><circle cx="6.5" cy="18" r="1.6"/><circle cx="16.5" cy="18" r="1.6"/></svg>
+      </div>
+      <div class="gbabout-process__step-title">Packed &amp; Shipped</div>
+      <p class="gbabout-process__step-text">Orders are carefully packaged to prevent damage in transit and dispatched with tracking. Nationwide delivery, every time.</p>
+    </div>
+  </div>
+</section>
+
+<section class="gbabout-why">
+  <div class="gbabout-why__inner">
+    <div class="gbabout-why__sticky">
+      <div class="gbabout-why__label">Why Choose Us</div>
+      <h2 class="gbabout-why__title">The Go Big Difference</h2>
+      <p class="gbabout-why__sub">Not all printers are equal. Here's what sets Go Big Signs apart from the competition.</p>
+      <a href="{{ routes.all_products_collection_url }}" class="gbabout-why__cta">Shop All Products →</a>
+    </div>
+    <div class="gbabout-why__list">
+      <div class="gbabout-why__item">
+        <div class="gbabout-why__num">01</div>
+        <div>
+          <div class="gbabout-why__item-title">Dedicated Account Support</div>
+          <p class="gbabout-why__item-text">Every client gets a real person to talk to. No ticket queues. Our team responds quickly and knows your account history.</p>
+        </div>
+      </div>
+      <div class="gbabout-why__item">
+        <div class="gbabout-why__num">02</div>
+        <div>
+          <div class="gbabout-why__item-title">Prepress Artwork Review</div>
+          <p class="gbabout-why__item-text">We check every file before printing — resolution, crop marks, bleed, and colour mode. Catching issues before print saves you time and money.</p>
+        </div>
+      </div>
+      <div class="gbabout-why__item">
+        <div class="gbabout-why__num">03</div>
+        <div>
+          <div class="gbabout-why__item-title">Volume Pricing for Trade</div>
+          <p class="gbabout-why__item-text">Running a campaign or need multiple sets? We offer competitive bulk pricing for agencies, event companies, and trade customers.</p>
+        </div>
+      </div>
+      <div class="gbabout-why__item">
+        <div class="gbabout-why__num">04</div>
+        <div>
+          <div class="gbabout-why__item-title">Satisfaction Guarantee</div>
+          <p class="gbabout-why__item-text">If the print doesn't match what you approved, we'll reprint it or refund you — no argument. We stand behind our work completely.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gbabout-cta">
+  <div class="gbabout-cta__text">Ready to Make<br><em>Your Brand</em><br>Impossible to Ignore?</div>
+  <a href="/pages/contact" class="gbabout-cta__btn">Get a Free Quote →</a>
+</section>
+
+{% stylesheet %}
+  .gbabout-hero,
+  .gbabout-mission,
+  .gbabout-values,
+  .gbabout-process,
+  .gbabout-why,
+  .gbabout-cta {
+    --gba-navy: #0c1e3c;
+    --gba-navy-mid: #14305e;
+    --gba-orange: #e64a08;
+    --gba-text-mid: #4a4a60;
+    --gba-border: #edeae4;
+    --gba-warm: #f8f7f5;
+    --gba-display: var(--font-heading--family);
+    --gba-ui: var(--font-body--family);
+  }
+
+  .gbabout-hero {
+    background: var(--gba-navy);
+    padding: 100px 48px 80px;
+    position: relative;
+    overflow: hidden;
+    min-height: 500px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .gbabout-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 39px,
+        rgb(255 255 255 / 3%) 39px,
+        rgb(255 255 255 / 3%) 40px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 39px,
+        rgb(255 255 255 / 3%) 39px,
+        rgb(255 255 255 / 3%) 40px
+      );
+  }
+
+  .gbabout-hero__accent {
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(230 74 8 / 18%) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .gbabout-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+  }
+
+  .gbabout-hero__breadcrumb {
+    font-family: var(--gba-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: rgb(255 255 255 / 40%);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .gbabout-hero__breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .gbabout-hero__breadcrumb a:hover {
+    color: var(--gba-orange);
+  }
+
+  .gbabout-hero__breadcrumb span {
+    color: var(--gba-orange);
+  }
+
+  .gbabout-hero__label {
+    font-family: var(--gba-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--gba-orange);
+    margin-bottom: 16px;
+  }
+
+  .gbabout-hero__title {
+    font-family: var(--gba-display);
+    font-weight: 500;
+    font-size: clamp(60px, 8vw, 120px);
+    letter-spacing: 0.01em;
+    color: #fff;
+    line-height: 0.95;
+    margin: 0 0 24px;
+  }
+
+  .gbabout-hero__title em {
+    color: var(--gba-orange);
+    font-style: normal;
+  }
+
+  .gbabout-hero__sub {
+    font-size: 18px;
+    color: rgb(255 255 255 / 65%);
+    line-height: 1.7;
+    max-width: 580px;
+    margin: 0;
+  }
+
+  .gbabout-mission {
+    padding: 100px 48px;
+    background: #fff;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .gbabout-mission__label {
+    font-family: var(--gba-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--gba-orange);
+    margin-bottom: 16px;
+  }
+
+  .gbabout-mission__title {
+    font-family: var(--gba-display);
+    font-weight: 500;
+    font-size: clamp(40px, 4.5vw, 64px);
+    letter-spacing: 0.03em;
+    color: var(--gba-navy);
+    line-height: 1;
+    margin: 0 0 24px;
+  }
+
+  .gbabout-mission__text {
+    font-size: 15px;
+    color: var(--gba-text-mid);
+    line-height: 1.85;
+    margin: 0;
+  }
+
+  .gbabout-mission__text + .gbabout-mission__text {
+    margin-top: 16px;
+  }
+
+  .gbabout-mission__visual {
+    position: relative;
+    background: var(--gba-navy);
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .gbabout-mission__visual-grid {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 39px,
+        rgb(255 255 255 / 5%) 39px,
+        rgb(255 255 255 / 5%) 40px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 39px,
+        rgb(255 255 255 / 5%) 39px,
+        rgb(255 255 255 / 5%) 40px
+      );
+  }
+
+  .gbabout-mission__stat-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgb(255 255 255 / 8%);
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+  }
+
+  .gbabout-mission__stat {
+    padding: 40px 32px;
+    background: var(--gba-navy);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .gbabout-mission__stat-num {
+    font-family: var(--gba-display);
+    font-weight: 500;
+    font-size: 64px;
+    letter-spacing: 0.02em;
+    color: var(--gba-orange);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .gbabout-mission__stat-suffix {
+    color: #fff;
+    font-size: 0.5em;
+  }
+
+  .gbabout-mission__stat-suffix--sm {
+    font-size: 0.4em;
+  }
+
+  .gbabout-mission__stat-label {
+    font-family: var(--gba-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: rgb(255 255 255 / 50%);
+  }
+
+  .gbabout-values {
+    padding: 100px 48px;
+    background: var(--gba-warm);
+  }
+
+  .gbabout-values__header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 64px;
+  }
+
+  .gbabout-values__label {
+    font-family: var(--gba-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--gba-orange);
+    margin-bottom: 14px;
+  }
+
+  .gbabout-values__title {
+    font-family: var(--gba-display);
+    font-weight: 500;
+    font-size: clamp(40px, 4vw, 60px);
+    letter-spacing: 0.03em;
+    color: var(--gba-navy);
+    line-height: 1;
+    margin: 0;
+  }
+
+  .gbabout-values__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2px;
+  }
+
+  .gbabout-values__card {
+    background: #fff;
+    padding: 40px 36px;
+    border-top: 3px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .gbabout-values__card:hover {
+    border-color: var(--gba-orange);
+  }
+
+  .gbabout-values__card-num {
+    font-family: var(--gba-display);
+    font-weight: 500;
+    font-size: 48px;
+    color: rgb(230 74 8 / 15%);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .gbabout-values__card-title {
+    font-family: var(--gba-ui);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--gba-navy);
+    margin-bottom: 14px;
+  }
+
+  .gbabout-values__card-text {
+    font-size: 14px;
+    color: var(--gba-text-mid);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .gbabout-process {
+    padding: 100px 48px;
+    background: var(--gba-navy);
+  }
+
+  .gbabout-process__header {
+    margin-bottom: 64px;
+  }
+
+  .gbabout-process__label {
+    font-family: var(--gba-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--gba-orange);
+    margin-bottom: 14px;
+  }
+
+  .gbabout-process__title {
+    font-family: var(--gba-display);
+    font-weight: 500;
+    font-size: clamp(40px, 5vw, 72px);
+    letter-spacing: 0.02em;
+    color: #fff;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .gbabout-process__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: rgb(255 255 255 / 6%);
+  }
+
+  .gbabout-process__step {
+    background: var(--gba-navy);
+    padding: 40px 32px;
+    position: relative;
+  }
+
+  .gbabout-process__step-num {
+    font-family: var(--gba-display);
+    font-weight: 500;
+    font-size: 80px;
+    color: rgb(230 74 8 / 12%);
+    line-height: 1;
+    position: absolute;
+    top: 20px;
+    right: 24px;
+  }
+
+  .gbabout-process__step-icon {
+    margin-bottom: 20px;
+    color: var(--gba-orange);
+  }
+
+  .gbabout-process__step-icon svg {
+    width: 28px;
+    height: 28px;
+    display: block;
+  }
+
+  .gbabout-process__step-title {
+    font-family: var(--gba-ui);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--gba-orange);
+    margin-bottom: 12px;
+  }
+
+  .gbabout-process__step-text {
+    font-size: 14px;
+    color: rgb(255 255 255 / 55%);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .gbabout-why {
+    padding: 100px 48px;
+    background: #fff;
+  }
+
+  .gbabout-why__inner {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .gbabout-why__sticky {
+    position: sticky;
+    top: 120px;
+  }
+
+  .gbabout-why__label {
+    font-family: var(--gba-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--gba-orange);
+    margin-bottom: 16px;
+  }
+
+  .gbabout-why__title {
+    font-family: var(--gba-display);
+    font-weight: 500;
+    font-size: clamp(44px, 4.5vw, 66px);
+    letter-spacing: 0.02em;
+    color: var(--gba-navy);
+    line-height: 1;
+    margin: 0 0 24px;
+  }
+
+  .gbabout-why__sub {
+    font-size: 14px;
+    color: var(--gba-text-mid);
+    line-height: 1.75;
+    margin: 0 0 32px;
+  }
+
+  .gbabout-why__cta {
+    display: inline-block;
+    padding: 16px 32px;
+    background: var(--gba-orange);
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--gba-ui);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    transition: background 0.2s;
+  }
+
+  .gbabout-why__cta:hover {
+    background: #c43d04;
+  }
+
+  .gbabout-why__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gbabout-why__item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 24px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--gba-border);
+    align-items: start;
+  }
+
+  .gbabout-why__item:first-child {
+    border-top: 1px solid var(--gba-border);
+  }
+
+  .gbabout-why__num {
+    font-family: var(--gba-display);
+    font-weight: 500;
+    font-size: 32px;
+    color: var(--gba-orange);
+    line-height: 1;
+    padding-top: 2px;
+  }
+
+  .gbabout-why__item-title {
+    font-family: var(--gba-ui);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--gba-navy);
+    margin-bottom: 10px;
+  }
+
+  .gbabout-why__item-text {
+    font-size: 14px;
+    color: var(--gba-text-mid);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .gbabout-cta {
+    padding: 80px 48px;
+    background: var(--gba-orange);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .gbabout-cta__text {
+    font-family: var(--gba-display);
+    font-weight: 500;
+    font-size: clamp(36px, 4vw, 60px);
+    letter-spacing: 0.02em;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .gbabout-cta__text em {
+    color: var(--gba-navy);
+    font-style: normal;
+  }
+
+  .gbabout-cta__btn {
+    flex-shrink: 0;
+    padding: 18px 40px;
+    background: var(--gba-navy);
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--gba-ui);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .gbabout-cta__btn:hover {
+    background: var(--gba-navy-mid);
+  }
+
+  @media screen and (max-width: 1024px) {
+    .gbabout-why__inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .gbabout-why__sticky {
+      position: static;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    .gbabout-hero,
+    .gbabout-mission,
+    .gbabout-values,
+    .gbabout-process,
+    .gbabout-why {
+      padding: 64px 20px;
+    }
+
+    .gbabout-cta {
+      padding: 48px 20px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .gbabout-mission {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .gbabout-values__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .gbabout-process__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .gbabout-mission__stat-grid {
+      min-height: 280px;
+    }
+  }
+
+  @media screen and (max-width: 540px) {
+    .gbabout-process__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .gbabout-mission__stat-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About Us",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_label",
+      "label": "Hero eyebrow",
+      "default": "Our Story"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_text",
+      "label": "Hero text",
+      "default": "Go Big Signs is a full-service signage and display company. We help businesses show up big at trade shows, retail spaces, and corporate events."
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Us"
+    }
+  ]
+}
+{% endschema %}

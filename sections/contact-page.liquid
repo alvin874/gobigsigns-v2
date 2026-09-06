@@ -1,0 +1,667 @@
+{%- doc -%}
+  Contact page, ported from the v1 theme's templates/page.contact.liquid.
+  Hero, contact details, Shopify contact form, and a trust bar.
+{%- enddoc -%}
+
+{%- liquid
+  assign icon_stroke = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"'
+-%}
+
+<section class="gbcon-hero">
+  <div class="gbcon-hero__inner">
+    <div class="gbcon-hero__breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a> › <span>{{ page.title | default: 'Contact' }}</span>
+    </div>
+    <div class="gbcon-hero__label">{{ section.settings.hero_label }}</div>
+    <h1 class="gbcon-hero__title">Contact<br>Go Big Signs</h1>
+    <p class="gbcon-hero__sub">{{ section.settings.hero_text }}</p>
+  </div>
+</section>
+
+<section class="gbcon-body">
+  <div class="gbcon-body__grid">
+    <div class="gbcon-info">
+      <div class="gbcon-info__heading">Let's Talk</div>
+      <p class="gbcon-info__intro">Whether you need a single banner or a full event kit, we're here to help. Reach out and we'll get back to you within one business day.</p>
+
+      <div class="gbcon-info__items">
+        <div class="gbcon-info__item">
+          <div class="gbcon-info__icon">
+            <svg viewBox="0 0 24 24" {{ icon_stroke }} aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+          </div>
+          <div>
+            <div class="gbcon-info__label">Phone</div>
+            <div class="gbcon-info__value"><a href="tel:+18776716045">(877) 671-6045</a><br>Mon–Fri, 8am–6pm</div>
+          </div>
+        </div>
+
+        <div class="gbcon-info__item">
+          <div class="gbcon-info__icon">
+            <svg viewBox="0 0 24 24" {{ icon_stroke }} aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+          </div>
+          <div>
+            <div class="gbcon-info__label">Email</div>
+            <div class="gbcon-info__value"><a href="mailto:info@gobigsigns.com">info@gobigsigns.com</a><br>We reply within 24 hours</div>
+          </div>
+        </div>
+
+        <div class="gbcon-info__item">
+          <div class="gbcon-info__icon">
+            <svg viewBox="0 0 24 24" {{ icon_stroke }} aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="gbcon-info__label">Production Facility</div>
+            <div class="gbcon-info__value">Available by appointment<br>Contact us to arrange a visit</div>
+          </div>
+        </div>
+
+        <div class="gbcon-info__item">
+          <div class="gbcon-info__icon">
+            <svg viewBox="0 0 24 24" {{ icon_stroke }} aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div>
+            <div class="gbcon-info__label">Production Hours</div>
+            <div class="gbcon-info__value">Monday – Friday: 7am – 5pm</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gbcon-form-wrap">
+      <div class="gbcon-form-wrap__title">Send Us a Message</div>
+      <p class="gbcon-form-wrap__sub">Fill in the details below and one of our signage specialists will get back to you shortly.</p>
+
+      {% form 'contact', id: 'ContactForm' %}
+        {%- if form.posted_successfully? -%}
+          <div class="gbcon-success gbcon-success--visible">
+            Thanks for reaching out! We'll be in touch within one business day.
+          </div>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <div class="gbcon-success gbcon-success--visible gbcon-success--error">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="gbcon-field-row">
+          <div>
+            <label class="gbcon-label" for="ContactForm-name">Full Name *</label>
+            <input
+              class="gbcon-input"
+              type="text"
+              id="ContactForm-name"
+              name="contact[name]"
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              autocomplete="name"
+              required
+            >
+          </div>
+          <div>
+            <label class="gbcon-label" for="ContactForm-company">Company</label>
+            <input class="gbcon-input" type="text" id="ContactForm-company" name="contact[company]" autocomplete="organization">
+          </div>
+        </div>
+
+        <div class="gbcon-field-row">
+          <div>
+            <label class="gbcon-label" for="ContactForm-email">Email Address *</label>
+            <input
+              class="gbcon-input"
+              type="email"
+              id="ContactForm-email"
+              name="contact[email]"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              autocomplete="email"
+              required
+            >
+          </div>
+          <div>
+            <label class="gbcon-label" for="ContactForm-phone">Phone</label>
+            <input class="gbcon-input" type="tel" id="ContactForm-phone" name="contact[phone]" autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="gbcon-field">
+          <label class="gbcon-label" for="ContactForm-enquiry">Type of Enquiry</label>
+          <div class="gbcon-select-wrap">
+            <select class="gbcon-select" id="ContactForm-enquiry" name="contact[enquiry_type]">
+              <option value="">— Select an option —</option>
+              <option value="quote">Request a Quote</option>
+              <option value="files">File Request (Template / Spec Sheet / Instructions)</option>
+              <option value="artwork">Artwork / Design Help</option>
+              <option value="order">Order Status</option>
+              <option value="bulk">Bulk / Volume Pricing</option>
+              <option value="other">General Enquiry</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="gbcon-field">
+          <label class="gbcon-label" for="ContactForm-subject">Subject</label>
+          <input
+            class="gbcon-input"
+            type="text"
+            id="ContactForm-subject"
+            name="contact[subject]"
+            value="{{ form.subject }}"
+            placeholder="e.g. Template Request for Product XYZ"
+          >
+        </div>
+
+        <div class="gbcon-field">
+          <label class="gbcon-label" for="ContactForm-message">Message *</label>
+          <textarea class="gbcon-textarea" id="ContactForm-message" name="contact[body]" required>{{ form.body }}</textarea>
+        </div>
+
+        <div class="gbcon-check-row">
+          <input type="checkbox" id="ContactForm-subscribe" name="contact[subscribe]">
+          <label for="ContactForm-subscribe">Keep me updated with new products, tips, and special offers from Go Big Signs.</label>
+        </div>
+
+        <button type="submit" class="gbcon-submit">Send Message →</button>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+<div class="gbcon-trust">
+  <div class="gbcon-trust__item">
+    <div class="gbcon-trust__icon">
+      <svg viewBox="0 0 24 24" {{ icon_stroke }} aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/></svg>
+    </div>
+    <div class="gbcon-trust__label">Fast Turnaround</div>
+    <div class="gbcon-trust__text">Standard 5–7 business day production. Contact us for tight deadlines.</div>
+  </div>
+  <div class="gbcon-trust__item">
+    <div class="gbcon-trust__icon">
+      <svg viewBox="0 0 24 24" {{ icon_stroke }} aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 16 5-5 4 4 3-2.5L21 17"/><circle cx="15.5" cy="8.5" r="1.5"/></svg>
+    </div>
+    <div class="gbcon-trust__label">Free Artwork Check</div>
+    <div class="gbcon-trust__text">Every file is reviewed before printing. We'll flag any issues before we start.</div>
+  </div>
+  <div class="gbcon-trust__item">
+    <div class="gbcon-trust__icon">
+      <svg viewBox="0 0 24 24" {{ icon_stroke }} aria-hidden="true"><path d="m12 2.5 8.5 4.5v10L12 21.5 3.5 17V7Z"/><path d="M3.5 7 12 11.5 20.5 7M12 11.5v10"/></svg>
+    </div>
+    <div class="gbcon-trust__label">Ship Anywhere</div>
+    <div class="gbcon-trust__text">We deliver nationwide. Bulk orders welcome with volume discounts available.</div>
+  </div>
+  <div class="gbcon-trust__item">
+    <div class="gbcon-trust__icon">
+      <svg viewBox="0 0 24 24" {{ icon_stroke }} aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="m7.5 12.5 3 3 6-6.5"/></svg>
+    </div>
+    <div class="gbcon-trust__label">Satisfaction Guarantee</div>
+    <div class="gbcon-trust__text">Not happy? We'll reprint or refund. Your satisfaction is our commitment.</div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var params = new URLSearchParams(window.location.search);
+    var subject = params.get('subject');
+    if (!subject) return;
+
+    var subjectField = document.getElementById('ContactForm-subject');
+    if (subjectField && !subjectField.value) subjectField.value = subject;
+
+    var enquiry = document.getElementById('ContactForm-enquiry');
+    if (enquiry && !enquiry.value) {
+      var lower = subject.toLowerCase();
+      if (lower.indexOf('template') !== -1 || lower.indexOf('spec sheet') !== -1 || lower.indexOf('instructions') !== -1) {
+        enquiry.value = 'files';
+      }
+    }
+
+    var msg = document.getElementById('ContactForm-message');
+    if (msg && !msg.value) {
+      msg.value = 'Hi, I would like to request the following file:\n\n' + subject + '\n\nPlease send it to my email. Thank you.';
+    }
+  });
+</script>
+
+{% stylesheet %}
+  .gbcon-hero,
+  .gbcon-body,
+  .gbcon-trust {
+    --gbc-navy: #0c1e3c;
+    --gbc-orange: #e64a08;
+    --gbc-text-mid: #4a4a60;
+    --gbc-text-dim: #8e8ea8;
+    --gbc-border: #edeae4;
+    --gbc-warm: #f8f7f5;
+    --gbc-display: var(--font-heading--family);
+    --gbc-ui: var(--font-body--family);
+  }
+
+  .gbcon-hero {
+    background: var(--gbc-navy);
+    padding: 80px 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gbcon-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 39px,
+        rgb(255 255 255 / 4%) 39px,
+        rgb(255 255 255 / 4%) 40px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 39px,
+        rgb(255 255 255 / 4%) 39px,
+        rgb(255 255 255 / 4%) 40px
+      );
+    pointer-events: none;
+  }
+
+  .gbcon-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+  }
+
+  .gbcon-hero__breadcrumb {
+    font-family: var(--gbc-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: rgb(255 255 255 / 45%);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .gbcon-hero__breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .gbcon-hero__breadcrumb a:hover {
+    color: var(--gbc-orange);
+  }
+
+  .gbcon-hero__breadcrumb span {
+    color: var(--gbc-orange);
+  }
+
+  .gbcon-hero__label {
+    font-family: var(--gbc-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--gbc-orange);
+    margin-bottom: 14px;
+  }
+
+  .gbcon-hero__title {
+    font-family: var(--gbc-display);
+    font-weight: 500;
+    font-size: clamp(52px, 6vw, 88px);
+    letter-spacing: 0.02em;
+    color: #fff;
+    line-height: 1;
+    margin: 0 0 16px;
+  }
+
+  .gbcon-hero__sub {
+    font-size: 16px;
+    color: rgb(255 255 255 / 60%);
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0;
+  }
+
+  .gbcon-body {
+    padding: 80px 48px;
+    background: #fff;
+  }
+
+  .gbcon-body__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .gbcon-info__heading {
+    font-family: var(--gbc-display);
+    font-weight: 500;
+    font-size: 36px;
+    letter-spacing: 0.04em;
+    color: var(--gbc-navy);
+    margin-bottom: 8px;
+  }
+
+  .gbcon-info__intro {
+    font-size: 14px;
+    color: var(--gbc-text-mid);
+    line-height: 1.75;
+    margin: 0 0 40px;
+  }
+
+  .gbcon-info__items {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gbcon-info__item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--gbc-border);
+  }
+
+  .gbcon-info__item:first-child {
+    border-top: 1px solid var(--gbc-border);
+  }
+
+  .gbcon-info__icon {
+    width: 40px;
+    height: 40px;
+    background: var(--gbc-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #fff;
+  }
+
+  .gbcon-info__icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .gbcon-info__label {
+    font-family: var(--gbc-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--gbc-text-dim);
+    margin-bottom: 6px;
+  }
+
+  .gbcon-info__value {
+    font-size: 14px;
+    color: var(--gbc-navy);
+    line-height: 1.65;
+  }
+
+  .gbcon-info__value a {
+    color: var(--gbc-orange);
+    text-decoration: none;
+  }
+
+  .gbcon-info__value a:hover {
+    text-decoration: underline;
+  }
+
+  .gbcon-form-wrap {
+    background: var(--gbc-warm);
+    padding: 48px;
+  }
+
+  .gbcon-form-wrap__title {
+    font-family: var(--gbc-display);
+    font-weight: 500;
+    font-size: 30px;
+    letter-spacing: 0.04em;
+    color: var(--gbc-navy);
+    margin-bottom: 6px;
+  }
+
+  .gbcon-form-wrap__sub {
+    font-size: 13px;
+    color: var(--gbc-text-mid);
+    line-height: 1.65;
+    margin: 0 0 32px;
+  }
+
+  .gbcon-field {
+    margin-bottom: 20px;
+  }
+
+  .gbcon-field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .gbcon-label {
+    display: block;
+    font-family: var(--gbc-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--gbc-text-mid);
+    margin-bottom: 8px;
+  }
+
+  .gbcon-input,
+  .gbcon-select,
+  .gbcon-textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #d8d4cc;
+    background: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--gbc-navy);
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+    appearance: none;
+    border-radius: 0;
+  }
+
+  .gbcon-input:focus,
+  .gbcon-select:focus,
+  .gbcon-textarea:focus {
+    border-color: var(--gbc-orange);
+  }
+
+  .gbcon-textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .gbcon-select-wrap {
+    position: relative;
+  }
+
+  .gbcon-select-wrap::after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--gbc-text-mid);
+    pointer-events: none;
+  }
+
+  .gbcon-select {
+    padding-right: 40px;
+    cursor: pointer;
+  }
+
+  .gbcon-check-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .gbcon-check-row input[type='checkbox'] {
+    margin-top: 2px;
+    accent-color: var(--gbc-orange);
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .gbcon-check-row label {
+    font-size: 13px;
+    color: var(--gbc-text-mid);
+    line-height: 1.6;
+  }
+
+  .gbcon-submit {
+    width: 100%;
+    padding: 18px 32px;
+    background: var(--gbc-orange);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-family: var(--gbc-ui);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    transition: background 0.2s;
+  }
+
+  .gbcon-submit:hover {
+    background: #c43d04;
+  }
+
+  .gbcon-success {
+    background: #fff;
+    border-left: 3px solid var(--gbc-orange);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    display: none;
+    font-size: 14px;
+    color: var(--gbc-navy);
+  }
+
+  .gbcon-success--visible {
+    display: block;
+  }
+
+  .gbcon-success--error {
+    border-left-color: #b3261e;
+  }
+
+  .gbcon-trust {
+    background: var(--gbc-navy);
+    padding: 48px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+  }
+
+  .gbcon-trust__item {
+    padding: 32px 24px;
+    border-right: 1px solid rgb(255 255 255 / 8%);
+  }
+
+  .gbcon-trust__item:last-child {
+    border-right: none;
+  }
+
+  .gbcon-trust__icon {
+    margin-bottom: 12px;
+    line-height: 1;
+    color: var(--gbc-orange);
+  }
+
+  .gbcon-trust__icon svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+
+  .gbcon-trust__label {
+    font-family: var(--gbc-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--gbc-orange);
+    margin-bottom: 6px;
+  }
+
+  .gbcon-trust__text {
+    font-size: 13px;
+    color: rgb(255 255 255 / 55%);
+    line-height: 1.6;
+  }
+
+  @media screen and (max-width: 900px) {
+    .gbcon-hero {
+      padding: 60px 20px 48px;
+    }
+
+    .gbcon-body {
+      padding: 48px 20px;
+    }
+
+    .gbcon-body__grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .gbcon-form-wrap {
+      padding: 32px 24px;
+    }
+
+    .gbcon-field-row {
+      grid-template-columns: 1fr;
+    }
+
+    .gbcon-trust {
+      grid-template-columns: 1fr 1fr;
+      padding: 32px 20px;
+    }
+  }
+
+  @media screen and (max-width: 540px) {
+    .gbcon-trust {
+      grid-template-columns: 1fr;
+    }
+
+    .gbcon-trust__item {
+      border-right: none;
+      border-bottom: 1px solid rgb(255 255 255 / 8%);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Contact Page",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_label",
+      "label": "Hero eyebrow",
+      "default": "Get In Touch"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_text",
+      "label": "Hero text",
+      "default": "Have a project in mind? Need a quote? Our team is ready to help you make a big impression."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Page"
+    }
+  ]
+}
+{% endschema %}

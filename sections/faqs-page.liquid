@@ -1,0 +1,524 @@
+{%- doc -%}
+  FAQs page, ported from the v1 theme's templates/page.faqs.liquid.
+  Hero, category filter, five accordion groups, and a help sidebar.
+{%- enddoc -%}
+
+{% stylesheet %}
+  /* ── Hero ─────────────────────────────────────────────── */
+  .gbfaq-hero {
+    background: #0c1e3c; padding: 80px 48px 64px; position: relative; overflow: hidden;
+  }
+  .gbfaq-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.04) 39px, rgba(255,255,255,.04) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.04) 39px, rgba(255,255,255,.04) 40px);
+    pointer-events: none;
+  }
+  .gbfaq-hero__inner { position: relative; z-index: 1; max-width: 700px; }
+  .gbfaq-hero__breadcrumb {
+    font-family: var(--font-body--family); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.03em; color: rgba(255,255,255,.4);
+    margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+  }
+  .gbfaq-hero__breadcrumb a { color: inherit; text-decoration: none; }
+  .gbfaq-hero__breadcrumb a:hover { color: #e64a08; }
+  .gbfaq-hero__breadcrumb span { color: #e64a08; }
+  .gbfaq-hero__label {
+    font-family: var(--font-body--family); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.04em; color: #e64a08; margin-bottom: 14px;
+  }
+  .gbfaq-hero__title {
+    font-family: var(--font-heading--family); font-weight: 500;
+    font-size: clamp(52px, 7vw, 100px); letter-spacing: 0.02em; color: #fff;
+    line-height: 1; margin: 0 0 20px;
+  }
+  .gbfaq-hero__sub {
+    font-family: var(--font-body--family); font-size: 16px; color: rgba(255,255,255,.6); line-height: 1.7;
+  }
+
+  /* ── Category nav ─────────────────────────────────────── */
+  .gbfaq-nav { background: #f8f7f5; padding: 0 48px; border-bottom: 1px solid #e2ddd6; }
+  .gbfaq-nav__inner { display: flex; gap: 0; overflow-x: auto; }
+  .gbfaq-nav__btn {
+    flex-shrink: 0; padding: 20px 24px;
+    font-family: var(--font-body--family); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.03em; color: #8e8ea8;
+    background: none; border: none; border-bottom: 2px solid transparent;
+    cursor: pointer; transition: color 0.2s, border-color 0.2s;
+  }
+  .gbfaq-nav__btn:hover { color: #e64a08; }
+  .gbfaq-nav__btn.active { color: #e64a08; border-color: #e64a08; }
+
+  /* ── Main body ────────────────────────────────────────── */
+  .gbfaq-body { padding: 80px 48px; background: #fff; }
+  .gbfaq-body__inner { display: grid; grid-template-columns: 2fr 1fr; gap: 80px; max-width: 1200px; margin: 0 auto; align-items: start; }
+
+  /* ── Accordion ────────────────────────────────────────── */
+  .gbfaq-group { margin-bottom: 56px; }
+  .gbfaq-group:last-child { margin-bottom: 0; }
+  .gbfaq-group__title {
+    font-family: var(--font-heading--family); font-weight: 500;
+    font-size: 28px; letter-spacing: 0.05em; color: #0c1e3c;
+    margin-bottom: 4px; padding-bottom: 16px;
+    border-bottom: 2px solid #e64a08; display: inline-block;
+  }
+  .gbfaq-group__subtitle {
+    font-family: var(--font-body--family); font-size: 13px; color: #8e8ea8;
+    margin-bottom: 28px; margin-top: 8px;
+  }
+  .gbfaq-item {
+    border-bottom: 1px solid #EDEAE4;
+  }
+  .gbfaq-item__q {
+    width: 100%; display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; padding: 22px 0;
+    background: none; border: none; cursor: pointer; text-align: left;
+  }
+  .gbfaq-item__q-text {
+    font-family: var(--font-body--family); font-size: 14px; font-weight: 700;
+    color: #0c1e3c; letter-spacing: 0.02em; line-height: 1.4;
+    transition: color 0.2s;
+  }
+  .gbfaq-item__q:hover .gbfaq-item__q-text { color: #e64a08; }
+  .gbfaq-item__icon {
+    width: 28px; height: 28px; border: 1.5px solid #D8D4CC;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background 0.2s, border-color 0.2s;
+    font-size: 16px; color: #8e8ea8; font-weight: 300; line-height: 1;
+  }
+  .gbfaq-item.open .gbfaq-item__icon {
+    background: #e64a08; border-color: #e64a08; color: #fff;
+  }
+  .gbfaq-item__a {
+    display: none; padding: 0 0 24px;
+  }
+  .gbfaq-item.open .gbfaq-item__a { display: block; }
+  .gbfaq-item__a p {
+    font-family: var(--font-body--family); font-size: 14px; color: #4a4a60;
+    line-height: 1.8; margin: 0 0 12px;
+  }
+  .gbfaq-item__a p:last-child { margin-bottom: 0; }
+  .gbfaq-item__a ul {
+    margin: 8px 0 12px 20px; padding: 0;
+    font-family: var(--font-body--family); font-size: 14px; color: #4a4a60; line-height: 1.8;
+  }
+  .gbfaq-item__a a { color: #e64a08; text-decoration: none; }
+  .gbfaq-item__a a:hover { text-decoration: underline; }
+
+  /* ── Sidebar ──────────────────────────────────────────── */
+  .gbfaq-sidebar { position: sticky; top: 120px; }
+  .gbfaq-sidebar__card { background: #0c1e3c; padding: 40px 32px; margin-bottom: 3px; }
+  .gbfaq-sidebar__card-label {
+    font-family: var(--font-body--family); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.04em; color: #e64a08; margin-bottom: 12px;
+  }
+  .gbfaq-sidebar__card-title {
+    font-family: var(--font-heading--family); font-weight: 500;
+    font-size: 28px; letter-spacing: 0.03em; color: #fff; line-height: 1.1; margin-bottom: 14px;
+  }
+  .gbfaq-sidebar__card-text {
+    font-family: var(--font-body--family); font-size: 13px; color: rgba(255,255,255,.5);
+    line-height: 1.7; margin-bottom: 24px;
+  }
+  .gbfaq-sidebar__btn {
+    display: block; width: 100%; padding: 16px;
+    background: #e64a08; color: #fff; text-decoration: none; text-align: center;
+    font-family: var(--font-body--family); font-size: 12px; font-weight: 700;
+    letter-spacing: 0.03em; transition: background 0.2s;
+  }
+  .gbfaq-sidebar__btn:hover { background: #D93C00; }
+  .gbfaq-sidebar__links { background: #f8f7f5; padding: 32px; }
+  .gbfaq-sidebar__links-title {
+    font-family: var(--font-body--family); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.03em; color: #0c1e3c; margin-bottom: 20px;
+  }
+  .gbfaq-sidebar__link-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0; border-bottom: 1px solid #e2ddd6; text-decoration: none;
+  }
+  .gbfaq-sidebar__link-item:last-child { border-bottom: none; }
+  .gbfaq-sidebar__link-text {
+    font-family: var(--font-body--family); font-size: 13px; color: #0c1e3c;
+  }
+  .gbfaq-sidebar__link-arrow { color: #e64a08; font-size: 14px; }
+  .gbfaq-sidebar__link-item:hover .gbfaq-sidebar__link-text { color: #e64a08; }
+
+  /* ── Responsive ───────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .gbfaq-body__inner { grid-template-columns: 1fr; }
+    .gbfaq-sidebar { position: static; }
+  }
+  @media (max-width: 900px) {
+    .gbfaq-hero { padding: 60px 20px 48px; }
+    .gbfaq-nav { padding: 0 20px; }
+    .gbfaq-body { padding: 48px 20px; }
+  }
+{% endstylesheet %}
+
+<!-- Hero -->
+<section class="gbfaq-hero">
+  <div class="gbfaq-hero__inner">
+    <div class="gbfaq-hero__breadcrumb">
+      <a href="/">Home</a> › <span>{{ page.title | default: 'FAQs' }}</span>
+    </div>
+    <div class="gbfaq-hero__label">Help Centre</div>
+    <h1 class="gbfaq-hero__title">Frequently<br>Asked<br>Questions</h1>
+    <p class="gbfaq-hero__sub">Everything you need to know about ordering signage and display products from Go Big Signs.</p>
+  </div>
+</section>
+
+<!-- Category nav -->
+<nav class="gbfaq-nav" aria-label="FAQ categories">
+  <div class="gbfaq-nav__inner">
+    <button class="gbfaq-nav__btn active" onclick="gbFaqCat(this,'ordering')" type="button">Ordering</button>
+    <button class="gbfaq-nav__btn" onclick="gbFaqCat(this,'artwork')" type="button">Artwork & Files</button>
+    <button class="gbfaq-nav__btn" onclick="gbFaqCat(this,'production')" type="button">Production</button>
+    <button class="gbfaq-nav__btn" onclick="gbFaqCat(this,'shipping')" type="button">Shipping</button>
+    <button class="gbfaq-nav__btn" onclick="gbFaqCat(this,'products')" type="button">Products</button>
+  </div>
+</nav>
+
+<!-- FAQ body -->
+<section class="gbfaq-body">
+  <div class="gbfaq-body__inner">
+
+    <!-- Accordion column -->
+    <div class="gbfaq-accordion">
+
+      <!-- Ordering -->
+      <div class="gbfaq-group" data-cat="ordering">
+        <div class="gbfaq-group__title">Ordering</div>
+        <p class="gbfaq-group__subtitle">Everything about placing orders and pricing</p>
+
+        <div class="gbfaq-item open">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="true">
+            <span class="gbfaq-item__q-text">How do I place an order?</span>
+            <span class="gbfaq-item__icon">−</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>You can order directly through our website by selecting your product, choosing your size and quantity, then proceeding to checkout. If your project is custom or complex, use our <a href="/pages/contact">contact form</a> to request a quote and we'll guide you through the process.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">Do you offer bulk or volume pricing?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>Yes. We offer competitive discounts for orders of 5 or more units of the same product. The more you order, the lower the unit price. For large-volume trade orders, contact us directly for a tailored quote — pricing can vary based on substrate, size, and finish.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">Can I order a custom size not listed on the website?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>Absolutely. Most of our products can be produced in custom dimensions. Simply <a href="/pages/contact">contact our team</a> with your required size, quantity, and product type, and we'll provide a custom quote. There is no minimum order size on custom work.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">What payment methods do you accept?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>We accept all major credit and debit cards (Visa, Mastercard, Amex), as well as PayPal, Apple Pay, and Google Pay at checkout. For large corporate orders, we can arrange invoicing — contact us to set up a trade account.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">Can I get a sample before ordering in bulk?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>Yes. We can produce a single printed proof of most products before you commit to a bulk run. Sample orders are charged at the standard single-unit price. Contact us to arrange this if your project requires it.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Artwork & Files -->
+      <div class="gbfaq-group" data-cat="artwork">
+        <div class="gbfaq-group__title">Artwork & Files</div>
+        <p class="gbfaq-group__subtitle">File formats, specs, and artwork submission</p>
+
+        <div class="gbfaq-item open">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="true">
+            <span class="gbfaq-item__q-text">What file formats do you accept?</span>
+            <span class="gbfaq-item__icon">−</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>We accept the following file formats for print-ready artwork:</p>
+            <ul>
+              <li><strong>PDF</strong> — preferred; export as PDF/X-1a or PDF/X-4 with bleed and crop marks</li>
+              <li><strong>AI / EPS</strong> — with all fonts outlined and linked images embedded</li>
+              <li><strong>PSD / TIFF</strong> — flattened, 300 dpi at 100% size (or 150 dpi at large format sizes)</li>
+              <li><strong>JPG / PNG</strong> — accepted but only at sufficient resolution (minimum 150 dpi at final print size)</li>
+            </ul>
+            <p>We do not recommend supplying Word, PowerPoint, or Google Slides files for large format printing as they cannot maintain print quality.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">What resolution do I need for large format printing?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>For large format prints viewed from a distance (trade show banners, pull-up banners, backdrops), we recommend a minimum of <strong>100–150 dpi at final print size</strong>. For smaller items like brochures or POS displays viewed up close, aim for <strong>300 dpi at final size</strong>.</p>
+            <p>If you're unsure, send us your file and we'll check it for you before printing — for free.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">Do you check my artwork before printing?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>Yes — every order includes a free prepress artwork check. Our team reviews your file for resolution, bleed, crop marks, colour mode (RGB vs CMYK), and font embedding. If we spot an issue, we'll contact you before printing so you can correct it. This helps avoid wasted prints and ensures your final product looks exactly as intended.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">I don't have a designer — can you help create my artwork?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>Yes. We offer basic design and layout services for an additional fee. This includes resizing and reformatting existing artwork for print, as well as basic design from a supplied brief (logo, colours, copy). Contact us with your requirements and we'll provide a design quote.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">Can I reprint an old order with updated artwork?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>Yes. If you've ordered before, simply place a new order and upload your updated artwork file. If you'd like to make minor edits to a previous file (e.g. update a phone number or logo), contact us and we can often assist at no extra charge depending on the scope of changes.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Production -->
+      <div class="gbfaq-group" data-cat="production">
+        <div class="gbfaq-group__title">Production</div>
+        <p class="gbfaq-group__subtitle">Turnaround times and production details</p>
+
+        <div class="gbfaq-item open">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="true">
+            <span class="gbfaq-item__q-text">How long does production take?</span>
+            <span class="gbfaq-item__icon">−</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>Our standard production turnaround is <strong>5–7 business days</strong> from the time your artwork is approved. Production time does not include shipping time — please factor in delivery when planning for an event. Contact us if you have a tight deadline and we'll do our best to accommodate.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">Can you accommodate tight deadlines?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>We'll always do our best to work within your timeline. If you have an upcoming event or a tight deadline, contact us before ordering and we'll let you know what's possible. Production time does not include shipping time, so plan accordingly.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">What printing technology do you use?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>We use commercial-grade wide-format inkjet printers with UV-resistant and latex inks depending on the application. Our equipment is regularly calibrated for colour accuracy. For fabric products (e.g. SEG frames, fabric backdrops), we use dye-sublimation printing for vibrant, wash-resistant results.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">How accurate will my brand colours be?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>We take colour accuracy seriously. Our printers are calibrated to standard colour profiles, and we work in CMYK throughout production. If you have brand colour standards (Pantone or CMYK values), please include them with your file submission and we'll match as closely as the printing process allows. Note: screens display colours in RGB, which can appear different to printed output — we recommend reviewing a printed proof for colour-critical applications.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipping -->
+      <div class="gbfaq-group" data-cat="shipping">
+        <div class="gbfaq-group__title">Shipping & Delivery</div>
+        <p class="gbfaq-group__subtitle">Delivery options, tracking, and returns</p>
+
+        <div class="gbfaq-item open">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="true">
+            <span class="gbfaq-item__q-text">Do you ship nationwide?</span>
+            <span class="gbfaq-item__icon">−</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>Yes. We ship to all locations via express couriers with full tracking. Delivery timeframes vary by destination — typically 1–3 business days for metropolitan areas and 3–5 for regional locations. Shipping costs are calculated at checkout based on your order size and delivery address.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">How is my order packaged to prevent damage?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>We take great care with packaging. Rolled items (banners, vinyl prints) are packed in sturdy cardboard tubes. Rigid substrates (corflute, foam board, acrylic) are wrapped and boxed with foam corner protection. Hardware items (banner stands, display frames) are packed in their original carry cases where applicable.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">My order arrived damaged — what should I do?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>If your order arrives damaged in transit, please photograph the damage (packaging and product) and <a href="/pages/contact">contact us within 48 hours</a> of delivery. We will arrange a replacement reprint at no charge and lodge a claim with the courier on your behalf.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">Can I pick up my order in person?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>Local pickup may be available by arrangement. Contact us before placing your order to confirm if pickup is available at our facility and to schedule a collection time. Pickup is typically available the same day production is complete.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products -->
+      <div class="gbfaq-group" data-cat="products">
+        <div class="gbfaq-group__title">Products</div>
+        <p class="gbfaq-group__subtitle">Product-specific questions and comparisons</p>
+
+        <div class="gbfaq-item open">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="true">
+            <span class="gbfaq-item__q-text">What's the difference between a pull-up banner and an SEG display?</span>
+            <span class="gbfaq-item__icon">−</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p><strong>Pull-up banners</strong> (also called retractable banners or roll-up banners) use a spring-loaded mechanism to roll the graphic in and out of a base unit. They are quick to set up, compact to transport, and great for portable displays. They are generally printed on PVC or polyester film.</p>
+            <p><strong>SEG (Silicone Edge Graphics)</strong> displays use a rigid aluminium frame with a routed channel. The fabric graphic has a silicone strip sewn around the edge that slots into the frame, creating a seamless, backlit-ready appearance. SEG is the premium option for trade shows and permanent installations where a polished look is essential.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">Are your display products suitable for outdoor use?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>Several of our products are suitable for outdoor use. Vinyl banners, corflute signs, and mesh banners are all weather-resistant and UV-stable for outdoor applications. Products like fabric backdrops and SEG displays are designed for indoor use. If you have a specific outdoor application in mind, contact us and we'll recommend the best substrate and finishing options.</p>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">How long will my printed products last?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>Print longevity depends on the product, substrate, and environment. As a general guide:</p>
+            <ul>
+              <li><strong>Indoor fabric displays:</strong> 5+ years with normal use and proper storage</li>
+              <li><strong>Outdoor vinyl banners:</strong> 2–3 years in direct sun/weather exposure</li>
+              <li><strong>Corflute signs:</strong> 1–2 years outdoors, longer if under cover</li>
+              <li><strong>Acrylic / foamboard:</strong> Long-lasting indoors, not recommended for outdoor use</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="gbfaq-item">
+          <button class="gbfaq-item__q" onclick="gbFaqToggle(this)" type="button" aria-expanded="false">
+            <span class="gbfaq-item__q-text">Can I order just the printed graphic without the hardware?</span>
+            <span class="gbfaq-item__icon">+</span>
+          </button>
+          <div class="gbfaq-item__a">
+            <p>Yes. Many of our products are available as print-only (graphic replacement) options. This is ideal if you already own a display frame or stand and simply need updated artwork. When ordering, select the "Graphic Only" option if available, or contact us to arrange a replacement print for your existing hardware.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end accordion -->
+
+    <!-- Sidebar -->
+    <aside class="gbfaq-sidebar">
+      <div class="gbfaq-sidebar__card">
+        <div class="gbfaq-sidebar__card-label">Still need help?</div>
+        <div class="gbfaq-sidebar__card-title">Talk to a Signage Expert</div>
+        <p class="gbfaq-sidebar__card-text">Can't find what you need? Our team is ready to answer any question about your project.</p>
+        <a href="/pages/contact" class="gbfaq-sidebar__btn">Contact Us →</a>
+      </div>
+      <div class="gbfaq-sidebar__links">
+        <div class="gbfaq-sidebar__links-title">Quick Links</div>
+        <a href="/collections/all" class="gbfaq-sidebar__link-item">
+          <span class="gbfaq-sidebar__link-text">Shop All Products</span>
+          <span class="gbfaq-sidebar__link-arrow">→</span>
+        </a>
+        <a href="/pages/contact" class="gbfaq-sidebar__link-item">
+          <span class="gbfaq-sidebar__link-text">Request a Quote</span>
+          <span class="gbfaq-sidebar__link-arrow">→</span>
+        </a>
+        <a href="/pages/about" class="gbfaq-sidebar__link-item">
+          <span class="gbfaq-sidebar__link-text">About Go Big Signs</span>
+          <span class="gbfaq-sidebar__link-arrow">→</span>
+        </a>
+        <a href="/collections/exhibition-booth-kits" class="gbfaq-sidebar__link-item">
+          <span class="gbfaq-sidebar__link-text">Exhibition Booths</span>
+          <span class="gbfaq-sidebar__link-arrow">→</span>
+        </a>
+        <a href="/collections/pull-up-banners" class="gbfaq-sidebar__link-item">
+          <span class="gbfaq-sidebar__link-text">Pull-Up Banners</span>
+          <span class="gbfaq-sidebar__link-arrow">→</span>
+        </a>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<script>
+  function gbFaqToggle(btn) {
+    const item = btn.closest('.gbfaq-item');
+    const isOpen = item.classList.contains('open');
+    item.classList.toggle('open', !isOpen);
+    btn.setAttribute('aria-expanded', !isOpen);
+    btn.querySelector('.gbfaq-item__icon').textContent = isOpen ? '+' : '−';
+  }
+
+  function gbFaqCat(btn, cat) {
+    document.querySelectorAll('.gbfaq-nav__btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.gbfaq-group').forEach(g => {
+      g.style.display = (g.dataset.cat === cat) ? 'block' : 'none';
+    });
+    document.querySelector('.gbfaq-group[data-cat="' + cat + '"]')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Show all groups by default (no filtering on load)
+  document.querySelectorAll('.gbfaq-group').forEach(g => g.style.display = 'block');
+</script>
+
+{% schema %}
+{
+  "name": "FAQs",
+  "tag": "section",
+  "presets": [
+    {
+      "name": "FAQs"
+    }
+  ]
+}
+{% endschema %}
