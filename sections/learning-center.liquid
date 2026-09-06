@@ -1,0 +1,521 @@
+{%- doc -%}
+  Learning Center landing page, ported from the v1 theme's
+  templates/page.learning-center.liquid: a navy hero, an intro, three
+  curated guide sections, and a quick-links band.
+{%- enddoc -%}
+
+<section class="gblearn-hero">
+  <div class="gblearn-hero__inner">
+    <div class="gblearn-hero__breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>/</span>
+      <span>{{ page.title | default: 'Learning Center' }}</span>
+    </div>
+    <div class="gblearn-hero__label">{{ section.settings.eyebrow }}</div>
+    <h1 class="gblearn-hero__title">{{ page.title | default: 'Learning Center' }}</h1>
+    <p class="gblearn-hero__sub">{{ section.settings.hero_text }}</p>
+  </div>
+</section>
+
+<div class="gblearn-body">
+  <section class="gblearn-intro">
+    <div class="gblearn-intro__inner">
+      <h2 class="gblearn-intro__title">{{ section.settings.intro_title }}</h2>
+      <p class="gblearn-intro__text">{{ section.settings.intro_text }}</p>
+    </div>
+  </section>
+
+  <section class="gblearn-section gblearn-section--warm">
+    <div class="gblearn-section__inner">
+      <div class="gblearn-section__head">
+        <div>
+          <div class="gblearn-section__eyebrow">Trade show planning</div>
+          <h2 class="gblearn-section__title">Booth &amp; exhibit guides</h2>
+        </div>
+        <p class="gblearn-section__desc">Plan a booth footprint, compare portable display systems, and build a polished event presence.</p>
+      </div>
+      <div class="gblearn-grid">
+        <a href="/blogs/display-guides/how-to-choose-the-right-exhibition-booth-kit-for-a-trade-show" class="gblearn-card">
+          <div>
+            <div class="gblearn-card__type">Buying guide</div>
+            <div class="gblearn-card__title">How to choose the right exhibition booth kit for a trade show</div>
+            <p class="gblearn-card__text">A practical guide to booth size, portability, backwalls, counters, graphics, and event setup.</p>
+          </div>
+          <span class="gblearn-card__link">Read guide</span>
+        </a>
+        <a href="{{ routes.collections_url }}/exhibition-booth-kits" class="gblearn-card">
+          <div>
+            <div class="gblearn-card__type">Shop category</div>
+            <div class="gblearn-card__title">Exhibition booth kits</div>
+            <p class="gblearn-card__text">Browse complete booth kits, pop-up packages, backlit displays, and modular trade show options.</p>
+          </div>
+          <span class="gblearn-card__link">Shop now</span>
+        </a>
+        <a href="{{ routes.collections_url }}/trade-show-flooring" class="gblearn-card">
+          <div>
+            <div class="gblearn-card__type">Add-on guide</div>
+            <div class="gblearn-card__title">Trade show flooring</div>
+            <p class="gblearn-card__text">Define your booth space and make long event days easier with event flooring options.</p>
+          </div>
+          <span class="gblearn-card__link">View flooring</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="gblearn-section">
+    <div class="gblearn-section__inner">
+      <div class="gblearn-section__head">
+        <div>
+          <div class="gblearn-section__eyebrow">Portable displays</div>
+          <h2 class="gblearn-section__title">Banner stand guides</h2>
+        </div>
+        <p class="gblearn-section__desc">Compare retractable banner stands, roll-up displays, tabletop options, and replacement graphics.</p>
+      </div>
+      <div class="gblearn-grid">
+        <a href="/blogs/display-guides/banner-stand-buying-guide-pull-up-retractable-x-frame-and-tabletop-options" class="gblearn-card">
+          <div>
+            <div class="gblearn-card__type">Buying guide</div>
+            <div class="gblearn-card__title">Banner stand buying guide</div>
+            <p class="gblearn-card__text">Learn which stand type fits trade shows, retail promotions, counters, offices, and repeated travel.</p>
+          </div>
+          <span class="gblearn-card__link">Read guide</span>
+        </a>
+        <a href="{{ routes.collections_url }}/banner-stands" class="gblearn-card">
+          <div>
+            <div class="gblearn-card__type">Shop category</div>
+            <div class="gblearn-card__title">Banner stands</div>
+            <p class="gblearn-card__text">Compare portable banner display hardware, graphic packages, and sizes.</p>
+          </div>
+          <span class="gblearn-card__link">Shop stands</span>
+        </a>
+        <a href="{{ routes.collections_url }}/graphic-reprints" class="gblearn-card">
+          <div>
+            <div class="gblearn-card__type">Refresh displays</div>
+            <div class="gblearn-card__title">Graphic reprints</div>
+            <p class="gblearn-card__text">Update existing hardware with fresh campaign artwork instead of replacing the whole display.</p>
+          </div>
+          <span class="gblearn-card__link">View reprints</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="gblearn-section gblearn-section--warm">
+    <div class="gblearn-section__inner">
+      <div class="gblearn-section__head">
+        <div>
+          <div class="gblearn-section__eyebrow">Artwork &amp; production</div>
+          <h2 class="gblearn-section__title">Print file help</h2>
+        </div>
+        <p class="gblearn-section__desc">Avoid delays by preparing artwork at the right size, resolution, bleed, and color mode.</p>
+      </div>
+      <div class="gblearn-grid">
+        <a href="/blogs/display-guides/artwork-file-setup-guide-for-large-format-printing" class="gblearn-card">
+          <div>
+            <div class="gblearn-card__type">Artwork guide</div>
+            <div class="gblearn-card__title">Artwork file setup guide for large format printing</div>
+            <p class="gblearn-card__text">A simple checklist for file formats, DPI, bleed, CMYK color, fonts, and prepress checks.</p>
+          </div>
+          <span class="gblearn-card__link">Read guide</span>
+        </a>
+        <a href="/pages/faqs" class="gblearn-card">
+          <div>
+            <div class="gblearn-card__type">Help center</div>
+            <div class="gblearn-card__title">Artwork and production FAQs</div>
+            <p class="gblearn-card__text">Find answers about accepted file types, production time, shipping, and custom orders.</p>
+          </div>
+          <span class="gblearn-card__link">View FAQs</span>
+        </a>
+        <a href="{{ routes.collections_url }}/large-format-prints" class="gblearn-card">
+          <div>
+            <div class="gblearn-card__type">Shop category</div>
+            <div class="gblearn-card__title">Large format prints</div>
+            <p class="gblearn-card__text">Explore custom printed graphics for signs, banners, displays, and branded environments.</p>
+          </div>
+          <span class="gblearn-card__link">Shop prints</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="gblearn-quick">
+    <div class="gblearn-quick__inner">
+      <h2 class="gblearn-quick__title">Shop by common project</h2>
+      <div class="gblearn-links">
+        <a href="{{ routes.collections_url }}/pop-up-booth"><span>Pop up displays</span><span>+</span></a>
+        <a href="{{ routes.collections_url }}/zip-up-booths"><span>Zip up booths</span><span>+</span></a>
+        <a href="{{ routes.collections_url }}/led-lightbox-displays"><span>LED lightbox displays</span><span>+</span></a>
+        <a href="{{ routes.collections_url }}/pre-designed-backdrops"><span>Pre-designed backdrops</span><span>+</span></a>
+        <a href="{{ routes.collections_url }}/custom-signs"><span>Custom signs</span><span>+</span></a>
+        <a href="{{ routes.collections_url }}/magnetic-displays"><span>Magnetic displays</span><span>+</span></a>
+        <a href="{{ routes.collections_url }}/outdoor-display"><span>Outdoor displays</span><span>+</span></a>
+        <a href="/pages/contact"><span>Request a quote</span><span>+</span></a>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% stylesheet %}
+  .gblearn-hero,
+  .gblearn-body {
+    --gblearn-navy: #0c1e3c;
+    --gblearn-orange: #e64a08;
+    --gblearn-text-mid: #4a4a60;
+    --gblearn-text-dim: #8e8ea8;
+    --gblearn-border: #edeae4;
+    --gblearn-warm: #f8f7f5;
+    --gblearn-display: var(--font-heading--family);
+    --gblearn-ui: var(--font-body--family);
+  }
+
+  .gblearn-hero {
+    background: var(--gblearn-navy);
+    color: #fff;
+    padding: 84px 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gblearn-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 39px,
+        rgb(255 255 255 / 4%) 39px,
+        rgb(255 255 255 / 4%) 40px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 39px,
+        rgb(255 255 255 / 4%) 39px,
+        rgb(255 255 255 / 4%) 40px
+      );
+    pointer-events: none;
+  }
+
+  .gblearn-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 920px;
+  }
+
+  .gblearn-hero__breadcrumb {
+    font-family: var(--gblearn-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: rgb(255 255 255 / 42%);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .gblearn-hero__breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .gblearn-hero__breadcrumb a:hover {
+    color: var(--gblearn-orange);
+  }
+
+  .gblearn-hero__label {
+    font-family: var(--gblearn-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--gblearn-orange);
+    margin-bottom: 14px;
+  }
+
+  .gblearn-hero__title {
+    font-family: var(--gblearn-display);
+    font-weight: 500;
+    font-size: clamp(56px, 8vw, 112px);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    margin: 0 0 22px;
+  }
+
+  .gblearn-hero__sub {
+    font-size: 17px;
+    color: rgb(255 255 255 / 64%);
+    line-height: 1.75;
+    max-width: 680px;
+    margin: 0;
+  }
+
+  .gblearn-body {
+    background: #fff;
+  }
+
+  .gblearn-intro {
+    padding: 52px 48px;
+    border-bottom: 1px solid var(--gblearn-border);
+  }
+
+  .gblearn-intro__inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .gblearn-intro__title {
+    font-family: var(--gblearn-display);
+    font-weight: 500;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: var(--gblearn-navy);
+    margin: 0;
+  }
+
+  .gblearn-intro__text {
+    font-size: 15px;
+    color: var(--gblearn-text-mid);
+    line-height: 1.85;
+    margin: 0;
+  }
+
+  .gblearn-section {
+    padding: 68px 48px;
+    border-bottom: 1px solid var(--gblearn-border);
+  }
+
+  .gblearn-section--warm {
+    background: var(--gblearn-warm);
+  }
+
+  .gblearn-section__inner {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  .gblearn-section__head {
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+    align-items: end;
+    margin-bottom: 32px;
+  }
+
+  .gblearn-section__eyebrow {
+    font-family: var(--gblearn-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--gblearn-orange);
+    margin-bottom: 12px;
+  }
+
+  .gblearn-section__title {
+    font-family: var(--gblearn-display);
+    font-weight: 500;
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: var(--gblearn-navy);
+    margin: 0;
+  }
+
+  .gblearn-section__desc {
+    font-size: 14px;
+    color: var(--gblearn-text-mid);
+    line-height: 1.75;
+    max-width: 420px;
+    margin: 0;
+  }
+
+  .gblearn-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3px;
+  }
+
+  .gblearn-card {
+    background: #fff;
+    border: 1px solid var(--gblearn-border);
+    min-height: 230px;
+    padding: 28px;
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .gblearn-card:hover {
+    border-color: var(--gblearn-orange);
+    transform: translateY(-2px);
+  }
+
+  .gblearn-card__type {
+    font-family: var(--gblearn-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--gblearn-text-dim);
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+
+  .gblearn-card__title {
+    font-family: var(--gblearn-ui);
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--gblearn-navy);
+    margin-bottom: 14px;
+  }
+
+  .gblearn-card:hover .gblearn-card__title {
+    color: var(--gblearn-orange);
+  }
+
+  .gblearn-card__text {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--gblearn-text-mid);
+    margin: 0;
+  }
+
+  .gblearn-card__link {
+    margin-top: 24px;
+    font-family: var(--gblearn-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--gblearn-orange);
+    text-transform: uppercase;
+  }
+
+  .gblearn-quick {
+    padding: 68px 48px;
+    background: var(--gblearn-navy);
+    color: #fff;
+  }
+
+  .gblearn-quick__inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 64px;
+  }
+
+  .gblearn-quick__title {
+    font-family: var(--gblearn-display);
+    font-weight: 500;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    margin: 0;
+  }
+
+  .gblearn-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 28px;
+  }
+
+  .gblearn-links a {
+    padding: 16px 0;
+    border-bottom: 1px solid rgb(255 255 255 / 12%);
+    color: rgb(255 255 255 / 72%);
+    text-decoration: none;
+    font-family: var(--gblearn-ui);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .gblearn-links a:hover {
+    color: var(--gblearn-orange);
+  }
+
+  @media screen and (max-width: 980px) {
+    .gblearn-intro__inner,
+    .gblearn-quick__inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .gblearn-section__head {
+      display: block;
+    }
+
+    .gblearn-section__desc {
+      margin-top: 16px;
+    }
+
+    .gblearn-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .gblearn-hero,
+    .gblearn-intro,
+    .gblearn-section,
+    .gblearn-quick {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .gblearn-grid,
+    .gblearn-links {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Learning Center",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Hero eyebrow",
+      "default": "Guides & resources"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_text",
+      "label": "Hero text",
+      "default": "Buying guides, artwork setup tips, product comparisons, and trade show planning resources for choosing the right signage and display products."
+    },
+    {
+      "type": "text",
+      "id": "intro_title",
+      "label": "Intro heading",
+      "default": "Start with the right display for the job."
+    },
+    {
+      "type": "textarea",
+      "id": "intro_text",
+      "label": "Intro text",
+      "default": "Use these guides to compare booth kits, banner stands, SEG displays, backdrops, artwork requirements, and replacement graphics. When you are ready to price a project, each guide points you toward the relevant product category or the Go Big Signs team."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Learning Center"
+    }
+  ]
+}
+{% endschema %}
