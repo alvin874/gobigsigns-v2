@@ -26,13 +26,13 @@
 
     <div class="gbcoll-seo__content">
       {%- if below_fold != blank -%}
-        {%- if below_fold.size > 0 and below_fold.first -%}
-          {%- for content_line in below_fold -%}
-            {{ content_line }}
-          {%- endfor -%}
-        {%- else -%}
-          {{ below_fold }}
-        {%- endif -%}
+        {%- comment -%}
+          A list metafield yields each HTML string in turn; a single string
+          yields itself once, so both shapes render correctly.
+        {%- endcomment -%}
+        {%- for content_line in below_fold -%}
+          {{ content_line }}
+        {%- endfor -%}
       {%- else -%}
         <h2>{{ collection.title }} — Professional Grade Displays</h2>
         <p>
