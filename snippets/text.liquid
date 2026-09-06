@@ -98,7 +98,7 @@
   </div>
 {% elsif plain_text != blank %}
   <{{ element }} {{ attributes | strip_newlines | strip }}>
-    {{ block.settings.text }}
+    {% render 'market-text', text: block.settings.text %}
   </{{ element }}>
 {% endif %}
 

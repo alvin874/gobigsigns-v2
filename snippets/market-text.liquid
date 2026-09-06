@@ -1,0 +1,47 @@
+{%- doc -%}
+  Substitutes market tokens inside a text setting and echoes the result.
+
+  Theme settings support dynamic sources ({{ }}) but not conditionals, so
+  copy stored in JSON templates cannot branch on the market by itself.
+  This lets that copy carry a token instead, which is resolved here from
+  snippets/market-terms.liquid:
+
+    [[origin]]     -> "the USA"       / "Canada"
+    [[inventory]]  -> "US inventory"  / "Canadian inventory"
+    [[country]]    -> "United States" / "Canada"
+    [[delivery]]   -> "Nationwide"    / "Canada-wide"
+
+  Text without a token passes through untouched, so this is safe to call
+  on every text setting in the theme.
+
+  @param {string} text - the raw setting value
+
+  @example
+  {% render 'market-text', text: block.settings.text %}
+{%- enddoc -%}
+
+{%- liquid
+  assign result = text
+-%}
+
+{%- if result contains '[[' -%}
+  {%- capture token_origin -%}{%- render 'market-terms', term: 'origin' -%}{%- endcapture -%}
+  {%- capture token_inventory -%}{%- render 'market-terms', term: 'inventory' -%}{%- endcapture -%}
+  {%- capture token_country -%}{%- render 'market-terms', term: 'country' -%}{%- endcapture -%}
+  {%- capture token_delivery -%}{%- render 'market-terms', term: 'delivery' -%}{%- endcapture -%}
+  {%- liquid
+    # strip the captured values, not the result, so no stray whitespace
+    # is substituted into the middle of a sentence
+    assign token_origin = token_origin | strip
+    assign token_inventory = token_inventory | strip
+    assign token_country = token_country | strip
+    assign token_delivery = token_delivery | strip
+
+    assign result = result | replace: '[[origin]]', token_origin
+    assign result = result | replace: '[[inventory]]', token_inventory
+    assign result = result | replace: '[[country]]', token_country
+    assign result = result | replace: '[[delivery]]', token_delivery
+  -%}
+{%- endif -%}
+
+{{- result -}}
