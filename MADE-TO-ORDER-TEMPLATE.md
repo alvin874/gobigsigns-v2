@@ -28,16 +28,29 @@ a way that needs a developer to reword it.
 
 ## Install
 
-1. Push the theme as usual (`shopify theme push`, or your normal deploy path).
-   All ten new files sit in directories Shopify already serves, so no config
-   changes are needed.
+This repo is connected to Shopify through the GitHub integration, so
+**merging to `main` deploys**. There is no `shopify theme push` step.
+
+1. Merge to `main`. Shopify pulls the branch into the connected theme on its
+   own. All ten new files sit in directories Shopify already serves, so no
+   config changes are needed. (`MADE-TO-ORDER-TEMPLATE.md` is at the repo
+   root, which is not a theme directory, so Shopify ignores it.)
 2. Create the product metafield definitions below, if they do not exist yet.
    Without them the specs and scale blocks simply hide themselves, so the
-   template is safe to ship first and fill in after.
-3. Assign products to the template (see "Bulk assignment").
-4. Open a made-to-order product in the theme editor and check the wording:
-   production and shipping days appear in **two** places that must agree —
-   the "Made to order badge" block and the "Made-to-order schema" block.
+   template is safe to deploy first and fill in after.
+3. **Check the wording before assigning any product.** Open a made-to-order
+   product in the theme editor, in a preview rather than the live theme, and
+   read the returns notice and the day figures. Production and shipping days
+   appear in **two** places that must agree — the "Made to order badge" block
+   and the "Made-to-order schema" block.
+4. Assign products to the template (see "Bulk assignment").
+
+Steps 1 and 2 are invisible to customers: the template renders for nobody
+until a product is assigned to it in step 4, and the one change to existing
+theme code is guarded by the `made-to-order` template suffix, so current
+product pages behave exactly as before. **Step 4 is the step that goes
+live** — the moment a product is assigned, whatever copy is in the blocks is
+what customers read.
 
 ### Metafield definitions
 
@@ -62,8 +75,9 @@ hides when every row is empty.
 
 ### Bulk assignment
 
-Assigning the template to products needs Admin access, so it runs through
-Codex — see the handoff block in the chat thread, or do it by hand:
+This is the step customers see, so do it after the copy has been checked.
+It needs Admin access, so it runs through Codex — see the handoff block in
+the chat thread, or do it by hand:
 
 - **Admin UI, small batches:** Products → filter by product type "Wall Art"
   (or a `wa-` tag) → select → Edit products → add the Theme template column →
