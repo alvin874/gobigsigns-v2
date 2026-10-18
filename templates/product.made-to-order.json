@@ -464,7 +464,7 @@
               "name": "Made-to-order schema",
               "settings": {
                 "brand_name": "Go Big Signs",
-                "availability": "PreOrder",
+                "availability": "InStock",
                 "production_min": 3,
                 "production_max": 7,
                 "shipping_min": 5,
