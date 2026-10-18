@@ -1,0 +1,522 @@
+{
+  "sections": {
+    "main": {
+      "type": "product-information",
+      "blocks": {
+        "media-gallery": {
+          "type": "_product-media-gallery",
+          "static": true,
+          "settings": {
+            "media_presentation": "grid",
+            "media_columns": "two",
+            "image_gap": 4,
+            "large_first_image": false,
+            "icons_style": "none",
+            "slideshow_controls_style": "counter",
+            "slideshow_mobile_controls_style": "dots",
+            "thumbnail_position": "right",
+            "thumbnail_width": 44,
+            "aspect_ratio": "adapt",
+            "constrain_to_viewport": true,
+            "media_fit": "contain",
+            "media_radius": 0,
+            "extend_media": false,
+            "zoom": true,
+            "video_loop": false,
+            "hide_variants": true,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "product-details": {
+          "type": "_product-details",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "details_position": "flex-start",
+            "gap": 24,
+            "sticky_details_desktop": true,
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 24,
+            "padding-block-end": 24,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "header_group": {
+              "type": "group",
+              "name": "Header",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 10,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "product_title": {
+                  "type": "product-title",
+                  "name": "t:names.title",
+                  "settings": {
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h3",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "price": {
+                  "type": "price",
+                  "settings": {
+                    "show_sale_price_first": true,
+                    "show_installments": false,
+                    "show_tax_info": false,
+                    "type_preset": "paragraph",
+                    "width": "100%",
+                    "alignment": "left",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "padding-block-start": 2,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "mto_badge": {
+                  "type": "mto-badge",
+                  "name": "Made to order badge",
+                  "settings": {
+                    "show_badge": true,
+                    "badge_label": "Made to order",
+                    "icon": "stopwatch",
+                    "accent_color": "#E64A08",
+                    "show_estimate": true,
+                    "estimate_prefix": "Estimated delivery",
+                    "production_min": 3,
+                    "production_max": 7,
+                    "shipping_min": 5,
+                    "shipping_max": 10,
+                    "cutoff_hour": 14,
+                    "js_refresh": true,
+                    "note": "Each piece is produced after you order, then shipped from [[origin]].",
+                    "padding-block-start": 4,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": ["product_title", "price", "mto_badge"]
+            },
+            "divider_top": {
+              "type": "_divider",
+              "name": "t:names.divider",
+              "settings": {
+                "thickness": 1,
+                "corner_radius": "square",
+                "width_percent": 100,
+                "padding-block-start": 0,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
+            "variant_picker": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": false,
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "buy_buttons": {
+              "type": "buy-buttons",
+              "settings": {
+                "stacking": true,
+                "show_pickup_availability": false,
+                "gift_card_form": false,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "quantity": {
+                  "type": "quantity",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                },
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": { "style_class": "button" },
+                  "blocks": {}
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            },
+            "mto_tag_notes": {
+              "type": "mto-tag-notes",
+              "name": "Made to order tag notes",
+              "settings": {
+                "heading": "",
+                "heading_tag": "h4",
+                "accent_color": "#E64A08",
+                "note_1_tag": "wa-hand-painted",
+                "note_1_text": "Hand-painted: each piece is unique, so slight variations from the photo are normal.",
+                "note_1_icon": "heart",
+                "note_2_tag": "wa-framed",
+                "note_2_text": "Frame included: arrives framed and ready to hang, no extra purchase needed.",
+                "note_2_icon": "check_box",
+                "note_3_tag": "wa-sets",
+                "note_3_text": "Multi-panel set: a hanging guide with spacing measurements is included in the box.",
+                "note_3_icon": "ruler",
+                "note_4_tag": "wa-large",
+                "note_4_text": "Oversized item: ships by freight or large-parcel carrier, so delivery may need a signature.",
+                "note_4_icon": "truck",
+                "padding-block-start": 0,
+                "padding-block-end": 4,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "mto_steps": {
+              "type": "mto-steps",
+              "name": "How made to order works",
+              "settings": {
+                "heading": "How made to order works",
+                "heading_tag": "h4",
+                "accent_color": "#E64A08",
+                "step_1_icon": "clipboard",
+                "step_1_heading": "You order",
+                "step_1_text": "Pick your piece and size. Nothing to upload, no proof to approve.",
+                "step_2_icon": "stopwatch",
+                "step_2_heading": "We make it",
+                "step_2_text": "Your piece is printed, stretched or painted to order in 3-7 business days.",
+                "step_3_icon": "truck",
+                "step_3_heading": "It ships to you",
+                "step_3_text": "Packed and tracked from [[origin]], typically 5-10 business days in transit.",
+                "padding-block-start": 8,
+                "padding-block-end": 8,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_description": {
+              "type": "text",
+              "name": "Product description",
+              "settings": {
+                "text": "{{ closest.product.description }}",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "mto_specs": {
+              "type": "mto-specs",
+              "name": "Made to order specs",
+              "settings": {
+                "heading": "Specifications",
+                "heading_tag": "h4",
+                "boolean_true_text": "Included",
+                "row_1_label": "Size",
+                "row_1_field": "custom.art_size",
+                "row_1_option": "Size",
+                "row_2_label": "Material",
+                "row_2_field": "custom.art_material",
+                "row_2_option": "",
+                "row_3_label": "Frame",
+                "row_3_field": "custom.art_frame",
+                "row_3_option": "",
+                "row_4_label": "Hanging hardware",
+                "row_4_field": "custom.ready_to_hang",
+                "row_4_option": "",
+                "row_5_label": "",
+                "row_5_field": "",
+                "row_5_option": "",
+                "row_6_label": "",
+                "row_6_field": "",
+                "row_6_option": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "mto_scale": {
+              "type": "mto-scale",
+              "name": "Made to order scale image",
+              "settings": {
+                "image_field": "custom.scale_image",
+                "heading": "See it to scale",
+                "heading_tag": "h4",
+                "caption": "",
+                "alt_text": "",
+                "padding-block-start": 4,
+                "padding-block-end": 4,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "mto_returns": {
+              "type": "mto-returns",
+              "name": "Made-to-order returns",
+              "settings": {
+                "heading": "Returns on made-to-order art",
+                "heading_tag": "h4",
+                "icon": "return",
+                "body": "<p>Because each piece is made for your order, we cannot accept returns or exchanges once production has started. Orders can be cancelled free of charge within 24 hours of ordering. Damaged or defective pieces are replaced free: report them within 48 hours of delivery with photos of the item and the packaging.</p>",
+                "link_label": "Read the full returns policy",
+                "policy_url": "",
+                "accent_color": "#E64A08",
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "faq_accordion": {
+              "type": "accordion",
+              "name": "t:names.accordion",
+              "settings": {
+                "icon": "plus",
+                "dividers": true,
+                "type_preset": "h6"
+              },
+              "blocks": {
+                "row_production": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "Production &amp; shipping times",
+                    "open_by_default": true,
+                    "icon": "none"
+                  },
+                  "blocks": {
+                    "body": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "text": "<p>This piece is made to order, so it is produced after you place the order rather than pulled from a shelf. Production takes 3-7 business days, then 5-10 business days in transit from [[origin]]. The estimated delivery window near the price is calculated from those times.</p>",
+                        "width": "100%",
+                        "type_preset": "paragraph",
+                        "alignment": "left"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["body"]
+                },
+                "row_cancellation": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "Can I cancel or change my order?",
+                    "open_by_default": false,
+                    "icon": "none"
+                  },
+                  "blocks": {
+                    "body": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "text": "<p>Yes, within 24 hours of ordering and before production starts, at no charge. After that the piece is already being made and the order cannot be cancelled. Email us as soon as you can and we will tell you where your order stands.</p>",
+                        "width": "100%",
+                        "type_preset": "paragraph",
+                        "alignment": "left"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["body"]
+                },
+                "row_packaging": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "How is it packaged and delivered?",
+                    "open_by_default": false,
+                    "icon": "none"
+                  },
+                  "blocks": {
+                    "body": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "text": "<p>Pieces ship in rigid, corner-protected packaging with tracking on every order. Oversized pieces travel by freight or large-parcel carrier and the carrier will contact you to arrange delivery, which may need a signature.</p>",
+                        "width": "100%",
+                        "type_preset": "paragraph",
+                        "alignment": "left"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["body"]
+                },
+                "row_hanging": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "Hanging and care",
+                    "open_by_default": false,
+                    "icon": "none"
+                  },
+                  "blocks": {
+                    "body": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "text": "<p>Hang out of direct sunlight and away from damp. Dust with a dry, soft cloth; do not use cleaning sprays or solvents. Multi-panel sets include a spacing guide so the panels line up the way they do in the photos.</p>",
+                        "width": "100%",
+                        "type_preset": "paragraph",
+                        "alignment": "left"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["body"]
+                }
+              },
+              "block_order": ["row_production", "row_cancellation", "row_packaging", "row_hanging"]
+            },
+            "mto_schema": {
+              "type": "mto-product-schema",
+              "name": "Made-to-order schema",
+              "settings": {
+                "brand_name": "Go Big Signs",
+                "availability": "PreOrder",
+                "production_min": 3,
+                "production_max": 7,
+                "shipping_min": 5,
+                "shipping_max": 10,
+                "shipping_country": "",
+                "shipping_rate": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "header_group",
+            "divider_top",
+            "variant_picker",
+            "buy_buttons",
+            "mto_tag_notes",
+            "mto_steps",
+            "product_description",
+            "mto_specs",
+            "mto_scale",
+            "mto_returns",
+            "faq_accordion",
+            "mto_schema"
+          ]
+        }
+      },
+      "settings": {
+        "content_width": "content-center-aligned",
+        "desktop_media_position": "left",
+        "equal_columns": false,
+        "limit_details_width": false,
+        "gap": 48,
+        "background_color": "{{ settings.color_palette.background }}",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "related_wall_art": {
+      "type": "product-mto-related",
+      "settings": {
+        "heading": "More like this",
+        "heading_tag": "h3",
+        "max_products": 4,
+        "collection_prefix": "wa-",
+        "priority_handles": "",
+        "fallback_any_collection": true,
+        "show_collection_link": true,
+        "link_label": "View all"
+      },
+      "blocks": {},
+      "block_order": []
+    }
+  },
+  "order": ["main", "related_wall_art"]
+}

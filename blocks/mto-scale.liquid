@@ -1,0 +1,219 @@
+{%- doc -%}
+  Scale / "see it in a room" visual, taken from a per-product image
+  metafield (an image or file_reference field, by default
+  custom.scale_image).
+
+  The block hides itself when the product has no such image and no
+  fallback image is set in the editor, so products without one are not
+  left with an empty band.
+
+  The image is lazy-loaded and served responsively. Alt text prefers the
+  block setting, then the alt text on the file itself, then a sentence
+  built from the product title, so the image is never announced as
+  unlabelled.
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign product = closest.product
+
+  assign scale_image = ''
+  assign field_path = block_settings.image_field | strip
+
+  if field_path != blank
+    assign path_parts = field_path | split: '.'
+
+    if path_parts.size >= 2
+      assign namespace = path_parts[0]
+      assign key = path_parts[1]
+      assign candidate = product.metafields[namespace][key].value
+
+      # Only an image-like drop has a width; this keeps a non-image
+      # file_reference from reaching image_url.
+      if candidate.width != blank
+        assign scale_image = candidate
+      endif
+    endif
+  endif
+
+  if scale_image == blank and block_settings.fallback_image != blank
+    assign scale_image = block_settings.fallback_image
+  endif
+
+  assign image_alt = block_settings.alt_text
+  if image_alt == blank
+    assign image_alt = scale_image.alt
+  endif
+  if image_alt == blank
+    assign image_alt = product.title | append: ' shown on a wall to show its scale'
+  endif
+-%}
+
+{%- if scale_image != blank -%}
+  <div
+    class="mto-scale spacing-style"
+    style="{% render 'spacing-style', settings: block_settings %}"
+    {{ block.shopify_attributes }}
+  >
+    {%- if block_settings.heading != blank -%}
+      <{{ block_settings.heading_tag }} class="mto-scale__heading">
+        {%- render 'market-text', text: block_settings.heading -%}
+      </{{ block_settings.heading_tag }}>
+    {%- endif -%}
+
+    <figure class="mto-scale__figure">
+      {{
+        scale_image
+        | image_url: width: 1600
+        | image_tag:
+          loading: 'lazy',
+          decoding: 'async',
+          class: 'mto-scale__image',
+          alt: image_alt,
+          widths: '320, 480, 640, 800, 1000, 1200, 1600',
+          sizes: '(min-width: 990px) 40vw, 100vw'
+      }}
+
+      {%- if block_settings.caption != blank -%}
+        <figcaption class="mto-scale__caption">
+          {%- render 'market-text', text: block_settings.caption -%}
+        </figcaption>
+      {%- endif -%}
+    </figure>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .mto-scale {
+    display: block;
+  }
+
+  .mto-scale__heading {
+    margin: 0 0 10px;
+    font-size: 0.9375rem;
+    letter-spacing: 0.02em;
+  }
+
+  .mto-scale__figure {
+    margin: 0;
+  }
+
+  .mto-scale__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 2px;
+  }
+
+  .mto-scale__caption {
+    margin-block-start: 8px;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text, 0.7));
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Made to order scale image",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows a per-product scale or in-room image from a product metafield. Hidden when the product has no image and no fallback is set here."
+    },
+    {
+      "type": "text",
+      "id": "image_field",
+      "label": "Image metafield",
+      "default": "custom.scale_image",
+      "info": "Written as namespace.key. Use an image or file field."
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_image",
+      "label": "Fallback image",
+      "info": "Used on products with no metafield image. Leave empty to hide the block instead."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "See it to scale"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading level",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "p", "label": "Plain text" }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Caption"
+    },
+    {
+      "type": "text",
+      "id": "alt_text",
+      "label": "Alt text",
+      "info": "Leave blank to use the alt text on the file, or a description built from the product title."
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Made to order scale image",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

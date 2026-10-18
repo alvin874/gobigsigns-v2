@@ -1,0 +1,90 @@
+{%- doc -%}
+  Echoes an estimated delivery date range for a made-to-order item.
+
+  Counts forward from today in business days (Mon-Fri), skipping
+  weekends, over production days + shipping days. Public holidays are
+  not modelled, so pad the shipping settings if that matters.
+
+  Rendered server-side so the range is present without JavaScript and
+  visible to crawlers. Page caching can leave it a day stale, which
+  blocks/mto-badge.liquid corrects on load with the same arithmetic.
+
+  @param {number} production_min - Business days in production, low end
+  @param {number} production_max - Business days in production, high end
+  @param {number} shipping_min - Business days in transit, low end
+  @param {number} shipping_max - Business days in transit, high end
+  @param {number} [cutoff_hour] - Hour (0-23, shop time) after which an
+    order is treated as placed the next day. 0 disables the cutoff.
+  @param {string} [date_format] - strftime format for each date
+  @param {string} [separator] - Text placed between the two dates
+
+  @example
+  {% render 'mto-delivery-range',
+    production_min: 3, production_max: 7,
+    shipping_min: 5, shipping_max: 10,
+    cutoff_hour: 14
+  %}
+{%- enddoc -%}
+
+{%- liquid
+  assign date_format = date_format | default: '%b %-d'
+  assign separator = separator | default: ' – '
+  assign cutoff_hour = cutoff_hour | default: 0
+
+  assign production_min = production_min | default: 0 | at_least: 0
+  assign production_max = production_max | default: production_min | at_least: production_min
+  assign shipping_min = shipping_min | default: 0 | at_least: 0
+  assign shipping_max = shipping_max | default: shipping_min | at_least: shipping_min
+
+  # An order placed after the cutoff only reaches the bench tomorrow.
+  assign extra_days = 0
+  if cutoff_hour > 0
+    assign hour_now = 'now' | date: '%H' | plus: 0
+    if hour_now >= cutoff_hour
+      assign extra_days = 1
+    endif
+  endif
+
+  assign days_min = production_min | plus: shipping_min | plus: extra_days | at_least: 1
+  assign days_max = production_max | plus: shipping_max | plus: extra_days | at_least: days_min
+
+  assign cursor = 'now' | date: '%s' | plus: 0
+  assign counted = 0
+  assign earliest = 0
+  assign latest = 0
+
+  # 200 calendar days is ample headroom for any sane production window.
+  for i in (1..200)
+    assign cursor = cursor | plus: 86400
+    assign day_of_week = cursor | date: '%w' | plus: 0
+
+    if day_of_week != 0 and day_of_week != 6
+      assign counted = counted | plus: 1
+
+      if counted == days_min
+        assign earliest = cursor
+      endif
+
+      if counted >= days_max
+        assign latest = cursor
+        break
+      endif
+    endif
+  endfor
+
+  if earliest == 0
+    assign earliest = cursor
+  endif
+  if latest == 0
+    assign latest = cursor
+  endif
+
+  assign earliest_text = earliest | date: date_format
+  assign latest_text = latest | date: date_format
+-%}
+
+{%- if earliest_text == latest_text -%}
+  {{- earliest_text -}}
+{%- else -%}
+  {{- earliest_text }}{{ separator }}{{ latest_text -}}
+{%- endif -%}

@@ -1,0 +1,348 @@
+{%- doc -%}
+  Tag-driven notes for wall art. Each of the four slots pairs a product
+  tag with a line of copy; the note shows only when the product carries
+  that tag, and the block disappears when none of them match.
+
+  Defaults cover the wa- tags already used for collections:
+    wa-hand-painted  each piece is unique
+    wa-framed        frame included
+    wa-sets          multi-panel, hanging guide included
+    wa-large         oversized, freight or large-parcel shipping
+
+  Tags are matched exactly, so "wa-large" does not match "wa-large-set".
+  Both the tag and the copy are editable, so a new tag needs no code.
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign product = closest.product
+  assign slots = '1,2,3,4' | split: ','
+-%}
+
+{%- capture notes_markup -%}
+  {%- for index in slots -%}
+    {%- liquid
+      assign tag_key = 'note_' | append: index | append: '_tag'
+      assign text_key = 'note_' | append: index | append: '_text'
+      assign icon_key = 'note_' | append: index | append: '_icon'
+
+      assign note_tag = block_settings[tag_key] | strip
+      assign note_text = block_settings[text_key]
+      assign note_icon = block_settings[icon_key]
+    -%}
+
+    {%- if note_tag != blank and note_text != blank and product.tags contains note_tag -%}
+      <li class="mto-tag-notes__item">
+        {%- if note_icon != 'none' -%}
+          <svg
+            class="mto-tag-notes__icon"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+          >
+            {%- render 'icon', icon: note_icon -%}
+          </svg>
+        {%- endif -%}
+        <span class="mto-tag-notes__text">{% render 'market-text', text: note_text %}</span>
+      </li>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- assign notes_markup = notes_markup | strip -%}
+
+{%- if notes_markup != blank -%}
+  <div
+    class="mto-tag-notes spacing-style"
+    style="
+      {% render 'spacing-style', settings: block_settings %}
+      --mto-accent: {{ block_settings.accent_color }};
+    "
+    {{ block.shopify_attributes }}
+  >
+    {%- if block_settings.heading != blank -%}
+      <{{ block_settings.heading_tag }} class="mto-tag-notes__heading">
+        {%- render 'market-text', text: block_settings.heading -%}
+      </{{ block_settings.heading_tag }}>
+    {%- endif -%}
+
+    <ul class="mto-tag-notes__list">
+      {{ notes_markup }}
+    </ul>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .mto-tag-notes {
+    display: block;
+  }
+
+  .mto-tag-notes__heading {
+    margin: 0 0 10px;
+    font-size: 0.9375rem;
+    letter-spacing: 0.02em;
+  }
+
+  .mto-tag-notes__list {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Flex rather than fixed grid columns: a note may or may not have an
+     icon, and the text should take the remaining width either way. */
+  .mto-tag-notes__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .mto-tag-notes__icon {
+    width: 16px;
+    height: 16px;
+    margin-block-start: 2px;
+    flex-shrink: 0;
+    color: var(--mto-accent, currentcolor);
+  }
+
+  .mto-tag-notes__text {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Made to order tag notes",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows a note only when the product carries the matching tag. Tags are matched exactly. Clear a tag or its text to switch that note off."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Leave blank for notes with no heading."
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading level",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "p", "label": "Plain text" }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Icon colour",
+      "default": "#E64A08"
+    },
+    {
+      "type": "header",
+      "content": "Note 1"
+    },
+    {
+      "type": "text",
+      "id": "note_1_tag",
+      "label": "Show when tagged",
+      "default": "wa-hand-painted"
+    },
+    {
+      "type": "text",
+      "id": "note_1_text",
+      "label": "Note",
+      "default": "Hand-painted: each piece is unique, so slight variations from the photo are normal."
+    },
+    {
+      "type": "select",
+      "id": "note_1_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "star", "label": "Star" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "eye", "label": "Eye" },
+        { "value": "check_box", "label": "Checkbox" },
+        { "value": "box", "label": "Box" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "plane", "label": "Plane" },
+        { "value": "ruler", "label": "Ruler" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "map_pin", "label": "Map pin" }
+      ],
+      "default": "heart"
+    },
+    {
+      "type": "header",
+      "content": "Note 2"
+    },
+    {
+      "type": "text",
+      "id": "note_2_tag",
+      "label": "Show when tagged",
+      "default": "wa-framed"
+    },
+    {
+      "type": "text",
+      "id": "note_2_text",
+      "label": "Note",
+      "default": "Frame included: arrives framed and ready to hang, no extra purchase needed."
+    },
+    {
+      "type": "select",
+      "id": "note_2_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "star", "label": "Star" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "eye", "label": "Eye" },
+        { "value": "check_box", "label": "Checkbox" },
+        { "value": "box", "label": "Box" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "plane", "label": "Plane" },
+        { "value": "ruler", "label": "Ruler" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "map_pin", "label": "Map pin" }
+      ],
+      "default": "check_box"
+    },
+    {
+      "type": "header",
+      "content": "Note 3"
+    },
+    {
+      "type": "text",
+      "id": "note_3_tag",
+      "label": "Show when tagged",
+      "default": "wa-sets"
+    },
+    {
+      "type": "text",
+      "id": "note_3_text",
+      "label": "Note",
+      "default": "Multi-panel set: a hanging guide with spacing measurements is included in the box."
+    },
+    {
+      "type": "select",
+      "id": "note_3_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "star", "label": "Star" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "eye", "label": "Eye" },
+        { "value": "check_box", "label": "Checkbox" },
+        { "value": "box", "label": "Box" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "plane", "label": "Plane" },
+        { "value": "ruler", "label": "Ruler" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "map_pin", "label": "Map pin" }
+      ],
+      "default": "ruler"
+    },
+    {
+      "type": "header",
+      "content": "Note 4"
+    },
+    {
+      "type": "text",
+      "id": "note_4_tag",
+      "label": "Show when tagged",
+      "default": "wa-large"
+    },
+    {
+      "type": "text",
+      "id": "note_4_text",
+      "label": "Note",
+      "default": "Oversized item: ships by freight or large-parcel carrier, so delivery may need a signature."
+    },
+    {
+      "type": "select",
+      "id": "note_4_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "star", "label": "Star" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "eye", "label": "Eye" },
+        { "value": "check_box", "label": "Checkbox" },
+        { "value": "box", "label": "Box" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "plane", "label": "Plane" },
+        { "value": "ruler", "label": "Ruler" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "map_pin", "label": "Map pin" }
+      ],
+      "default": "truck"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Made to order tag notes",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

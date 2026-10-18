@@ -1,0 +1,282 @@
+{%- doc -%}
+  Product JSON-LD for made-to-order items.
+
+  Replaces, rather than supplements, the `structured_data` filter that
+  sections/product-information.liquid normally emits: that filter
+  reports availability from inventory, which says "in stock" for an item
+  that does not exist yet, and it carries no handling time. That section
+  skips its own script when the template suffix is "made-to-order", so
+  keep this block on that template only — adding it elsewhere would put
+  two Product graphs on one page.
+
+  Availability defaults to PreOrder. It is the value Google documents
+  for "order now, made and shipped later", and unlike MadeToOrder it is
+  on Google's supported list. A product Shopify reports as unavailable
+  is marked OutOfStock regardless of the setting.
+
+  Handling time is the production window and transit time is the
+  shipping window, both in business days, matching the badge block.
+
+  Note: this markup is independent of the Google Merchant Center feed.
+  If you sync products to Shopping, the feed's own availability comes
+  from Shopify's inventory, so a feed saying "in stock" against a page
+  saying "preorder" can raise a mismatch warning in Merchant Center.
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign product = closest.product
+  assign variant = product.selected_or_first_available_variant
+
+  assign product_url = request.origin | append: product.url
+
+  assign brand_name = block_settings.brand_name
+  if brand_name == blank
+    assign brand_name = product.vendor
+  endif
+  if brand_name == blank
+    assign brand_name = shop.name
+  endif
+
+  assign availability = block_settings.availability
+  unless product.available
+    assign availability = 'OutOfStock'
+  endunless
+
+  assign ship_country = block_settings.shipping_country | strip
+  if ship_country == blank
+    assign ship_country = localization.country.iso_code | default: 'US'
+  endif
+
+  assign description = product.description | strip_html | strip | truncate: 400
+
+  assign rating = product.metafields.reviews.rating.value.rating
+  assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+  assign scale_min = product.metafields.reviews.rating.value.scale_min | default: 1
+  assign scale_max = product.metafields.reviews.rating.value.scale_max | default: 5
+
+  # A text setting arrives as a string, so coerce it before it reaches
+  # the markup as a number.
+  assign shipping_rate = block_settings.shipping_rate | strip
+-%}
+
+{%- capture image_list -%}
+  {%- for image in product.images limit: 3 -%}
+    {%- liquid
+      assign image_src = image | image_url: width: 1600
+
+      # image_url can return a protocol-relative URL, which is not a
+      # valid absolute URL for structured data.
+      unless image_src contains 'http'
+        assign image_src = image_src | prepend: 'https:'
+      endunless
+    -%}
+    {{- image_src | json -}}
+    {%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- capture shipping_details -%}
+  "shippingDetails": {
+    "@type": "OfferShippingDetails",
+    {%- if shipping_rate != blank %}
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": {{ shipping_rate | plus: 0 | json }},
+        "currency": {{ cart.currency.iso_code | json }}
+      },
+    {%- endif %}
+    "shippingDestination": {
+      "@type": "DefinedRegion",
+      "addressCountry": {{ ship_country | json }}
+    },
+    "deliveryTime": {
+      "@type": "ShippingDeliveryTime",
+      "handlingTime": {
+        "@type": "QuantitativeValue",
+        "minValue": {{ block_settings.production_min | json }},
+        "maxValue": {{ block_settings.production_max | json }},
+        "unitCode": "DAY"
+      },
+      "transitTime": {
+        "@type": "QuantitativeValue",
+        "minValue": {{ block_settings.shipping_min | json }},
+        "maxValue": {{ block_settings.shipping_max | json }},
+        "unitCode": "DAY"
+      },
+      "businessDays": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "https://schema.org/Monday",
+          "https://schema.org/Tuesday",
+          "https://schema.org/Wednesday",
+          "https://schema.org/Thursday",
+          "https://schema.org/Friday"
+        ]
+      }
+    }
+  }
+{%- endcapture -%}
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "@id": {{ product_url | append: '#product' | json }},
+    "name": {{ product.title | strip_html | json }},
+    "url": {{ product_url | json }},
+    {%- if description != blank %}
+      "description": {{ description | json }},
+    {%- endif %}
+    {%- if image_list != blank %}
+      "image": [{{ image_list }}],
+    {%- endif %}
+    {%- if product.type != blank %}
+      "category": {{ product.type | json }},
+    {%- endif %}
+    {%- if variant.sku != blank %}
+      "sku": {{ variant.sku | json }},
+    {%- endif %}
+    "brand": {
+      "@type": "Brand",
+      "name": {{ brand_name | json }}
+    },
+    {%- if rating != blank and rating_count != blank and rating_count > 0 %}
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": {{ rating | json }},
+        "ratingCount": {{ rating_count | json }},
+        "bestRating": {{ scale_max | json }},
+        "worstRating": {{ scale_min | json }}
+      },
+    {%- endif %}
+    {%- if product.variants.size > 1 %}
+      "offers": {
+        "@type": "AggregateOffer",
+        "offerCount": {{ product.variants.size | json }},
+        "lowPrice": {{ product.price_min | divided_by: 100.0 | json }},
+        "highPrice": {{ product.price_max | divided_by: 100.0 | json }},
+        "priceCurrency": {{ cart.currency.iso_code | json }},
+        "availability": {{ availability | prepend: 'https://schema.org/' | json }},
+        "itemCondition": "https://schema.org/NewCondition",
+        "url": {{ product_url | json }},
+        "seller": {
+          "@type": "Organization",
+          "name": {{ shop.name | json }}
+        },
+        {{ shipping_details }}
+      }
+    {%- else %}
+      "offers": {
+        "@type": "Offer",
+        "price": {{ variant.price | divided_by: 100.0 | json }},
+        "priceCurrency": {{ cart.currency.iso_code | json }},
+        "availability": {{ availability | prepend: 'https://schema.org/' | json }},
+        "itemCondition": "https://schema.org/NewCondition",
+        "url": {{ product_url | json }},
+        "seller": {
+          "@type": "Organization",
+          "name": {{ shop.name | json }}
+        },
+        {{ shipping_details }}
+      }
+    {%- endif %}
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Made-to-order schema",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Outputs Product structured data tuned for made-to-order items, with production time as the handling time. No visible output. Use it only on the made-to-order template: the product section drops its own Product schema there, so adding this block to other templates would duplicate the markup."
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand",
+      "default": "Go Big Signs",
+      "info": "Falls back to the product's vendor, then the shop name."
+    },
+    {
+      "type": "select",
+      "id": "availability",
+      "label": "Availability",
+      "options": [
+        { "value": "PreOrder", "label": "PreOrder (recommended)" },
+        { "value": "BackOrder", "label": "BackOrder" },
+        { "value": "MadeToOrder", "label": "MadeToOrder" },
+        { "value": "LimitedAvailability", "label": "LimitedAvailability" },
+        { "value": "InStock", "label": "InStock" }
+      ],
+      "default": "PreOrder",
+      "info": "PreOrder is Google's documented value for goods ordered now and shipped later. MadeToOrder is valid schema.org but is not on Google's supported list, so it may be ignored. A product Shopify reports as unavailable is always marked OutOfStock."
+    },
+    {
+      "type": "header",
+      "content": "Shipping details"
+    },
+    {
+      "type": "range",
+      "id": "production_min",
+      "label": "Production days, low end",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 3,
+      "unit": "d",
+      "info": "Reported as handling time. Keep these in step with the badge block."
+    },
+    {
+      "type": "range",
+      "id": "production_max",
+      "label": "Production days, high end",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 7,
+      "unit": "d"
+    },
+    {
+      "type": "range",
+      "id": "shipping_min",
+      "label": "Shipping days, low end",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 5,
+      "unit": "d"
+    },
+    {
+      "type": "range",
+      "id": "shipping_max",
+      "label": "Shipping days, high end",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 10,
+      "unit": "d"
+    },
+    {
+      "type": "text",
+      "id": "shipping_country",
+      "label": "Shipping destination country code",
+      "info": "Two-letter code, for example US. Leave blank to use the country of the market being viewed."
+    },
+    {
+      "type": "text",
+      "id": "shipping_rate",
+      "label": "Flat shipping rate",
+      "info": "Numbers only, for example 0 for free shipping. Leave blank to omit the shipping rate from the markup."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Made-to-order schema",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

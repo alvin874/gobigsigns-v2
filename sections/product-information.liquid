@@ -1,8 +1,16 @@
 
 
-<script type="application/ld+json">
-  {{ closest.product | structured_data }}
-</script>
+{%- comment -%}
+  The made-to-order template emits its own Product graph from
+  blocks/mto-product-schema.liquid, because `structured_data` reports
+  availability from inventory and carries no handling time. Skipping it
+  here keeps that page to a single Product graph.
+{%- endcomment -%}
+{%- unless template.suffix == 'made-to-order' -%}
+  <script type="application/ld+json">
+    {{ closest.product | structured_data }}
+  </script>
+{%- endunless -%}
 
 {% capture media_gallery %}
   {%- content_for 'block',

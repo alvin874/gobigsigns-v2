@@ -1,0 +1,346 @@
+{%- comment -%}
+  Related wall art drawn from the product's own wa- collection, for the
+  made-to-order product template.
+
+  Horizon's product-recommendations section asks Shopify for related
+  products, which is behavioural and ignores the wa- taxonomy. This
+  picks a collection the product is actually in, so a framed canvas
+  suggests other framed canvases.
+
+  Which collection:
+    1. the first handle listed in "Preferred collections" that this
+       product belongs to, in the order given
+    2. otherwise the smallest matching wa- collection, on the grounds
+       that the narrowest one is the most alike
+    3. otherwise, if allowed, any collection the product is in
+
+  Renders nothing when no collection qualifies or when the collection
+  holds no other products, so it is safe on every product.
+
+  Cards are deliberately plain markup rather than Horizon's product-card
+  block: that block expects to be composed from nested theme blocks in a
+  section that supports them, and this section only needs an image, a
+  title and a price.
+{%- endcomment -%}
+
+{%- liquid
+  assign prefix = section.settings.collection_prefix | strip | downcase
+  assign prefix_size = prefix | size
+
+  assign source = ''
+
+  # 1. Preferred handles, honoured in the order the merchant listed.
+  assign preferred = section.settings.priority_handles | split: ','
+
+  for handle in preferred
+    assign wanted = handle | strip | downcase
+
+    if wanted != blank
+      for candidate in product.collections
+        if candidate.handle == wanted
+          assign source = candidate
+          break
+        endif
+      endfor
+    endif
+
+    if source != blank
+      break
+    endif
+  endfor
+
+  # 2. Smallest collection whose handle starts with the prefix.
+  if source == blank and prefix_size > 0
+    assign fewest = 0
+
+    for candidate in product.collections
+      assign head = candidate.handle | slice: 0, prefix_size
+
+      if head == prefix
+        assign candidate_count = candidate.all_products_count
+
+        if source == blank
+          assign source = candidate
+          assign fewest = candidate_count
+        elsif candidate_count < fewest
+          assign source = candidate
+          assign fewest = candidate_count
+        endif
+      endif
+    endfor
+  endif
+
+  # 3. Last resort: any collection this product sits in.
+  if source == blank and section.settings.fallback_any_collection
+    assign source = product.collections.first
+  endif
+
+  assign max_products = section.settings.max_products
+  assign fetch_limit = max_products | plus: 1
+-%}
+
+{%- capture cards -%}
+  {%- if source != blank -%}
+    {%- assign shown = 0 -%}
+
+    {%- for card_product in source.products limit: fetch_limit -%}
+      {%- if card_product.id != product.id and shown < max_products -%}
+        {%- liquid
+          assign shown = shown | plus: 1
+
+          # Filters are not allowed inside a tag's arguments, so the alt
+          # text and price are resolved before the markup needs them.
+          assign card_alt = card_product.featured_media.alt
+          if card_alt == blank
+            assign card_alt = card_product.title
+          endif
+
+          if card_product.price_varies
+            assign card_price = card_product.price_min | money
+            assign price_template = 'content.price_from' | t: price: '__PRICE__'
+            assign card_price = price_template | replace: '__PRICE__', card_price
+          else
+            assign card_price = card_product.price | money
+          endif
+        -%}
+
+        <li class="mto-related__item">
+          <a class="mto-related__link" href="{{ card_product.url }}">
+            <div class="mto-related__media">
+              {%- if card_product.featured_media != blank -%}
+                {{
+                  card_product.featured_media.preview_image
+                  | image_url: width: 800
+                  | image_tag:
+                    loading: 'lazy',
+                    decoding: 'async',
+                    class: 'mto-related__image',
+                    alt: card_alt,
+                    widths: '200, 300, 400, 600, 800',
+                    sizes: '(min-width: 990px) 22vw, (min-width: 750px) 30vw, 45vw'
+                }}
+              {%- else -%}
+                <span class="mto-related__placeholder" aria-hidden="true"></span>
+              {%- endif -%}
+            </div>
+
+            <span class="mto-related__title">{{ card_product.title }}</span>
+
+            <span class="mto-related__price">{{ card_price }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- assign cards = cards | strip -%}
+
+{%- if cards != blank -%}
+  <div class="mto-related">
+    <div class="mto-related__inner">
+      <div class="mto-related__header">
+        {%- if section.settings.heading != blank -%}
+          <{{ section.settings.heading_tag }} class="mto-related__heading">
+            {%- render 'market-text', text: section.settings.heading -%}
+          </{{ section.settings.heading_tag }}>
+        {%- endif -%}
+
+        {%- if section.settings.show_collection_link and source.title != blank -%}
+          <a class="mto-related__view-all" href="{{ source.url }}">
+            {{ section.settings.link_label | default: 'View all' }}
+            <span class="visually-hidden"> {{ source.title }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+
+      <ul class="mto-related__list">
+        {{ cards }}
+      </ul>
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .mto-related {
+    padding-block: 48px;
+    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
+  }
+
+  .mto-related__inner {
+    max-width: var(--normal-page-width, 1400px);
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+
+  .mto-related__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 16px;
+    margin-block-end: 20px;
+  }
+
+  .mto-related__heading {
+    margin: 0;
+  }
+
+  .mto-related__view-all {
+    font-size: 0.8125rem;
+    text-underline-offset: 0.2em;
+  }
+
+  .mto-related__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mto-related__link {
+    display: grid;
+    gap: 6px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .mto-related__link:hover .mto-related__title {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .mto-related__media {
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .mto-related__image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .mto-related__placeholder {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    background: rgb(var(--color-foreground-rgb) / 0.06);
+  }
+
+  .mto-related__title {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  .mto-related__price {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  @media screen and (min-width: 750px) {
+    .mto-related {
+      padding-block: 64px;
+    }
+
+    .mto-related__inner {
+      padding-inline: 40px;
+    }
+
+    .mto-related__list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 32px 20px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Related wall art",
+  "tag": "div",
+  "class": "section-mto-related",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows other products from the wa- collection this product belongs to. Hidden when the product is in no matching collection, or when that collection has no other products."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "More like this"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading level",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "p", "label": "Plain text" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Which collection"
+    },
+    {
+      "type": "text",
+      "id": "collection_prefix",
+      "label": "Collection handle prefix",
+      "default": "wa-",
+      "info": "Only collections whose handle starts with this are considered."
+    },
+    {
+      "type": "textarea",
+      "id": "priority_handles",
+      "label": "Preferred collections",
+      "info": "Optional, comma separated handles, for example wa-hand-painted, wa-framed. The first one the product belongs to wins. Otherwise the smallest matching collection is used."
+    },
+    {
+      "type": "checkbox",
+      "id": "fallback_any_collection",
+      "label": "Fall back to any collection",
+      "default": true,
+      "info": "When the product is in no matching collection, use the first collection it does belong to."
+    },
+    {
+      "type": "header",
+      "content": "Collection link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_link",
+      "label": "Show a link to the collection",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link text",
+      "default": "View all"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Related wall art",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

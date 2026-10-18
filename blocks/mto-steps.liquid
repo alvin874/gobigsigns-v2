@@ -1,0 +1,363 @@
+{%- doc -%}
+  "How made to order works" strip: three fixed steps (order, we make
+  it, it ships), each with an editable icon, heading and line of copy.
+
+  Three steps are settings rather than nested blocks on purpose. The
+  sequence is the same on every product, so a merchant only ever edits
+  the wording, and keeping it flat means the strip cannot be left in a
+  half-built state in the editor.
+
+  Rendered as an ordered list so the sequence survives in a screen
+  reader. Step numbers come from CSS counters and are decorative; the
+  headings carry the meaning.
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+
+  assign steps = '1,2,3' | split: ','
+  assign filled = 0
+  for index in steps
+    assign heading_key = 'step_' | append: index | append: '_heading'
+    if block_settings[heading_key] != blank
+      assign filled = filled | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if filled > 0 -%}
+  <div
+    class="mto-steps spacing-style"
+    style="
+      {% render 'spacing-style', settings: block_settings %}
+      --mto-accent: {{ block_settings.accent_color }};
+    "
+    {{ block.shopify_attributes }}
+  >
+    {%- if block_settings.heading != blank -%}
+      <{{ block_settings.heading_tag }} class="mto-steps__heading">
+        {%- render 'market-text', text: block_settings.heading -%}
+      </{{ block_settings.heading_tag }}>
+    {%- endif -%}
+
+    <ol class="mto-steps__list">
+      {%- for index in steps -%}
+        {%- liquid
+          assign heading_key = 'step_' | append: index | append: '_heading'
+          assign text_key = 'step_' | append: index | append: '_text'
+          assign icon_key = 'step_' | append: index | append: '_icon'
+
+          assign step_heading = block_settings[heading_key]
+          assign step_text = block_settings[text_key]
+          assign step_icon = block_settings[icon_key]
+        -%}
+
+        {%- if step_heading != blank -%}
+          <li class="mto-steps__item">
+            {%- if step_icon != 'none' -%}
+              <svg
+                class="mto-steps__icon"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
+              >
+                {%- render 'icon', icon: step_icon -%}
+              </svg>
+            {%- endif -%}
+
+            <span class="mto-steps__body">
+              <span class="mto-steps__title">{% render 'market-text', text: step_heading %}</span>
+              {%- if step_text != blank -%}
+                <span class="mto-steps__text">{% render 'market-text', text: step_text %}</span>
+              {%- endif -%}
+            </span>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ol>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .mto-steps {
+    display: block;
+  }
+
+  .mto-steps__heading {
+    margin: 0 0 12px;
+    font-size: 0.9375rem;
+    letter-spacing: 0.02em;
+  }
+
+  .mto-steps__list {
+    counter-reset: mto-step;
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Flex rather than fixed grid columns: a step may or may not have an
+     icon, and the body should take the remaining width either way. */
+  .mto-steps__item {
+    counter-increment: mto-step;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .mto-steps__item::before {
+    content: counter(mto-step);
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--mto-accent, currentcolor);
+    border-radius: 50%;
+    color: var(--mto-accent, currentcolor);
+    font-family: var(--font-body--family);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .mto-steps__icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-block-start: 2px;
+    color: var(--mto-accent, currentcolor);
+  }
+
+  .mto-steps__body {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .mto-steps__title {
+    display: block;
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  .mto-steps__text {
+    display: block;
+    margin-block-start: 2px;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text, 0.7));
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  /* Three across once there is room; stacked on phones. */
+  @media screen and (min-width: 750px) {
+    .mto-steps__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "How made to order works",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "A three-step strip explaining the made-to-order flow. A step with no heading is skipped, so clear a heading to drop that step."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Strip heading",
+      "default": "How made to order works"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading level",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "p", "label": "Plain text" }
+      ],
+      "default": "h3",
+      "info": "Keep this one level below the product title so the page outline stays in order."
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent colour",
+      "default": "#E64A08"
+    },
+    {
+      "type": "header",
+      "content": "Step 1"
+    },
+    {
+      "type": "select",
+      "id": "step_1_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "check_box", "label": "Checkbox" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "star", "label": "Star" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "ruler", "label": "Ruler" },
+        { "value": "box", "label": "Box" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "plane", "label": "Plane" },
+        { "value": "map_pin", "label": "Map pin" },
+        { "value": "leaf", "label": "Leaf" }
+      ],
+      "default": "clipboard"
+    },
+    {
+      "type": "text",
+      "id": "step_1_heading",
+      "label": "Heading",
+      "default": "You order"
+    },
+    {
+      "type": "text",
+      "id": "step_1_text",
+      "label": "Text",
+      "default": "Pick your piece and size. Nothing to upload, no proof to approve."
+    },
+    {
+      "type": "header",
+      "content": "Step 2"
+    },
+    {
+      "type": "select",
+      "id": "step_2_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "check_box", "label": "Checkbox" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "star", "label": "Star" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "ruler", "label": "Ruler" },
+        { "value": "box", "label": "Box" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "plane", "label": "Plane" },
+        { "value": "map_pin", "label": "Map pin" },
+        { "value": "leaf", "label": "Leaf" }
+      ],
+      "default": "stopwatch"
+    },
+    {
+      "type": "text",
+      "id": "step_2_heading",
+      "label": "Heading",
+      "default": "We make it"
+    },
+    {
+      "type": "text",
+      "id": "step_2_text",
+      "label": "Text",
+      "default": "Your artwork is printed, stretched or painted to order in 3-7 business days."
+    },
+    {
+      "type": "header",
+      "content": "Step 3"
+    },
+    {
+      "type": "select",
+      "id": "step_3_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "clipboard", "label": "Clipboard" },
+        { "value": "check_box", "label": "Checkbox" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "star", "label": "Star" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "ruler", "label": "Ruler" },
+        { "value": "box", "label": "Box" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "plane", "label": "Plane" },
+        { "value": "map_pin", "label": "Map pin" },
+        { "value": "leaf", "label": "Leaf" }
+      ],
+      "default": "truck"
+    },
+    {
+      "type": "text",
+      "id": "step_3_heading",
+      "label": "Heading",
+      "default": "It ships to you"
+    },
+    {
+      "type": "text",
+      "id": "step_3_text",
+      "label": "Text",
+      "default": "Packed and tracked from [[origin]], typically 5-10 business days in transit."
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "How made to order works",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}
