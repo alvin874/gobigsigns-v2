@@ -22,7 +22,17 @@
   assign og_title = page_title | default: shop.name
   assign og_url = canonical_url | default: request.origin
   assign og_type = 'website'
-  assign og_description = page_description | default: shop.description | default: shop.name
+
+  # One description shared by meta description, og:description and twitter:description.
+  # Fallback order: SEO description -> collection description (plain text, 160 chars) -> shop description.
+  assign seo_description = page_description | strip_html | strip_newlines | strip
+  if seo_description == blank and request.page_type == 'collection' and collection.description != blank
+    assign seo_description = collection.description | strip_html | strip_newlines | strip | truncate: 160
+  endif
+  if seo_description == blank
+    assign seo_description = shop.description | strip_html | strip_newlines | strip
+  endif
+  assign og_description = seo_description | default: shop.name
 
   if request.page_type == 'product'
     assign og_type = 'product'
@@ -115,9 +125,9 @@
   href="{{ canonical_url }}"
 >
 
-{% if page_description %}
+{% if seo_description != blank %}
   <meta
     name="description"
-    content="{{ page_description | escape }}"
+    content="{{ seo_description | escape }}"
   >
 {% endif %}
