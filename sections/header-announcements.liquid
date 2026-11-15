@@ -137,9 +137,8 @@
       scrollbar-width: thin;
     }
 
-    .announcement-bar__text {
-      white-space: nowrap;
-      width: max-content;
+    .announcement-bar__slide .announcement-bar__text {
+      white-space: nowrap !important;
     }
 
     .announcement-bar__slide:has(.announcement-bar__disclaimer[open]) {
@@ -147,8 +146,7 @@
     }
 
     .announcement-bar__text:has(.announcement-bar__disclaimer[open]) {
-      width: auto;
-      white-space: normal;
+      white-space: normal !important;
     }
 
     .announcement-bar__text:has(.announcement-bar__disclaimer[open]) .announcement-bar__other-messages {
