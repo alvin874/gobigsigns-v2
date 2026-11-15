@@ -115,8 +115,55 @@
     place-content: center;
   }
 
-  .announcement-bar__text:first-child {
+  .announcement-bar__text {
     margin: 0;
+  }
+
+  .announcement-bar__disclaimer {
+    display: inline;
+    position: relative;
+  }
+
+  .announcement-bar__disclaimer summary {
+    display: inline;
+    cursor: pointer;
+    list-style: none;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .announcement-bar__disclaimer summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .announcement-bar__disclaimer:not([open]) .announcement-bar__disclaimer-text {
+    display: none;
+  }
+
+  .announcement-bar__disclaimer-text {
+    position: absolute;
+    z-index: 10;
+    top: calc(100% + 8px);
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    display: block;
+    width: min(90vw, 420px);
+    padding: 12px 16px;
+    border: 1px solid var(--color-border);
+    background: var(--color-background);
+    color: var(--color-foreground);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 15%);
+    font-size: 0.875rem;
+    font-weight: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: left;
+    text-transform: none;
+  }
+
+  .announcement-bar__disclaimer-text a {
+    color: inherit;
+    text-decoration: underline;
   }
 
   .announcement-bar__link {
