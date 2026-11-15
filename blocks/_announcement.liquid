@@ -30,7 +30,13 @@
     aria-hidden="{% if block_index == 0 %}false{% else %}true{% endif %}"
   >
     <p class="announcement-bar__text">
-      {% render 'market-text', text: block.settings.text %}
+      {%- capture announcement_text -%}{%- render 'market-text', text: block_settings.text -%}{%- endcapture -%}
+      {%- if block_settings.disclaimer_link != blank and announcement_text contains '[[disclaimer]]' -%}
+        {%- assign announcement_parts = announcement_text | split: '[[disclaimer]]' -%}
+        {{- announcement_parts[0] -}}<a class="announcement-bar__disclaimer-link" href="{{ block_settings.disclaimer_link }}" aria-label="Shipping origin exceptions and delivery information">*</a>{{- announcement_parts[1] -}}
+      {%- else -%}
+        {{- announcement_text | replace: '[[disclaimer]]', '' -}}
+      {%- endif -%}
     </p>
 
     {% if block_settings.link != blank %}
@@ -62,6 +68,12 @@
       "type": "url",
       "id": "link",
       "label": "t:settings.link"
+    },
+    {
+      "type": "url",
+      "id": "disclaimer_link",
+      "label": "Shipping disclaimer link",
+      "info": "Add [[disclaimer]] to the text where the linked asterisk should appear."
     },
     {
       "type": "header",
