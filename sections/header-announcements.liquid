@@ -115,13 +115,22 @@
     place-content: center;
   }
 
+  .announcement-bar__slide:has(.announcement-bar__disclaimer[open]) {
+    overflow: visible;
+    z-index: 10;
+  }
+
+  .shopify-section:has(.announcement-bar__disclaimer[open]) {
+    z-index: 10;
+  }
+
   .announcement-bar__text {
     margin: 0;
   }
 
   .announcement-bar__disclaimer {
     display: inline;
-    position: relative;
+    position: static;
   }
 
   .announcement-bar__disclaimer summary {
