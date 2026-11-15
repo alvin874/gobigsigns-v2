@@ -29,15 +29,15 @@
     {{ block.shopify_attributes }}
     aria-hidden="{% if block_index == 0 %}false{% else %}true{% endif %}"
   >
-    <p class="announcement-bar__text">
+    <div class="announcement-bar__text">
       {%- capture announcement_text -%}{%- render 'market-text', text: block_settings.text -%}{%- endcapture -%}
-      {%- if block_settings.disclaimer_link != blank and announcement_text contains '[[disclaimer]]' -%}
+      {%- if block_settings.disclaimer_text != blank and announcement_text contains '[[disclaimer]]' -%}
         {%- assign announcement_parts = announcement_text | split: '[[disclaimer]]' -%}
-        {{- announcement_parts[0] -}}<a class="announcement-bar__disclaimer-link" href="{{ block_settings.disclaimer_link }}" aria-label="Shipping origin exceptions and delivery information">*</a>{{- announcement_parts[1] -}}
+        {{- announcement_parts[0] -}}<details class="announcement-bar__disclaimer"><summary aria-label="Read shipping origin exceptions">*</summary><span class="announcement-bar__disclaimer-text">{{ block_settings.disclaimer_text | escape }}{% if block_settings.disclaimer_link != blank %} <a href="{{ block_settings.disclaimer_link }}">Shipping policy</a>{% endif %}</span></details>{{- announcement_parts[1] -}}
       {%- else -%}
         {{- announcement_text | replace: '[[disclaimer]]', '' -}}
       {%- endif -%}
-    </p>
+    </div>
 
     {% if block_settings.link != blank %}
       <a
@@ -73,7 +73,13 @@
       "type": "url",
       "id": "disclaimer_link",
       "label": "Shipping disclaimer link",
-      "info": "Add [[disclaimer]] to the text where the linked asterisk should appear."
+      "info": "Optional policy link inside the disclosure."
+    },
+    {
+      "type": "textarea",
+      "id": "disclaimer_text",
+      "label": "Shipping disclaimer",
+      "info": "Add [[disclaimer]] to the announcement text where the disclosure asterisk should appear."
     },
     {
       "type": "header",
