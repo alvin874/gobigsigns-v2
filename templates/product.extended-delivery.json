@@ -1,0 +1,497 @@
+{
+  "sections": {
+    "main": {
+      "type": "product-information",
+      "blocks": {
+        "media-gallery": {
+          "type": "_product-media-gallery",
+          "static": true,
+          "settings": {
+            "media_presentation": "grid",
+            "media_columns": "two",
+            "image_gap": 4,
+            "large_first_image": false,
+            "icons_style": "none",
+            "slideshow_controls_style": "counter",
+            "slideshow_mobile_controls_style": "dots",
+            "thumbnail_position": "right",
+            "thumbnail_width": 44,
+            "aspect_ratio": "adapt",
+            "constrain_to_viewport": true,
+            "media_fit": "contain",
+            "media_radius": 0,
+            "extend_media": false,
+            "zoom": true,
+            "video_loop": false,
+            "hide_variants": true,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "product-details": {
+          "type": "_product-details",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "details_position": "flex-start",
+            "gap": 24,
+            "sticky_details_desktop": true,
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 24,
+            "padding-block-end": 24,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "header_group": {
+              "type": "group",
+              "name": "Header",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 10,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "product_title": {
+                  "type": "product-title",
+                  "name": "t:names.title",
+                  "settings": {
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h3",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "price": {
+                  "type": "price",
+                  "settings": {
+                    "show_sale_price_first": true,
+                    "show_installments": false,
+                    "show_tax_info": false,
+                    "type_preset": "paragraph",
+                    "width": "100%",
+                    "alignment": "left",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "padding-block-start": 2,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "delivery_badge": {
+                  "type": "mto-badge",
+                  "name": "Custom printed badge",
+                  "settings": {
+                    "show_badge": true,
+                    "badge_label": "Custom printed to order",
+                    "icon": "stopwatch",
+                    "accent_color": "#E64A08",
+                    "show_estimate": true,
+                    "estimate_prefix": "Estimated delivery",
+                    "production_min": 2,
+                    "production_max": 3,
+                    "shipping_min": 13,
+                    "shipping_max": 17,
+                    "cutoff_hour": 14,
+                    "js_refresh": true,
+                    "note": "Printed for your order once your artwork is confirmed, then tracked to your door. Allow 3-4 weeks.",
+                    "padding-block-start": 4,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": ["product_title", "price", "delivery_badge"]
+            },
+            "divider_top": {
+              "type": "_divider",
+              "name": "t:names.divider",
+              "settings": {
+                "thickness": 1,
+                "corner_radius": "square",
+                "width_percent": 100,
+                "padding-block-start": 0,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
+            "variant_picker": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": true,
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "buy_buttons": {
+              "type": "buy-buttons",
+              "settings": {
+                "stacking": true,
+                "show_pickup_availability": false,
+                "gift_card_form": false,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "quantity": {
+                  "type": "quantity",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                },
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": { "style_class": "button" },
+                  "blocks": {}
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            },
+            "how_it_works": {
+              "type": "mto-steps",
+              "name": "How it works",
+              "settings": {
+                "heading": "How your order is made",
+                "heading_tag": "h4",
+                "accent_color": "#E64A08",
+                "step_1_icon": "clipboard",
+                "step_1_heading": "You order",
+                "step_1_text": "Choose your colour and quantity, then place your order.",
+                "step_2_icon": "check_box",
+                "step_2_heading": "We set up your artwork",
+                "step_2_text": "We get in touch about your logo file and confirm it before anything is printed.",
+                "step_3_icon": "truck",
+                "step_3_heading": "It ships to you",
+                "step_3_text": "Packed and tracked, typically arriving 3-4 weeks after your artwork is confirmed.",
+                "padding-block-start": 8,
+                "padding-block-end": 8,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_description": {
+              "type": "text",
+              "name": "Product description",
+              "settings": {
+                "text": "{{ closest.product.description }}",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "specs": {
+              "type": "mto-specs",
+              "name": "Specifications",
+              "settings": {
+                "heading": "Specifications",
+                "heading_tag": "h4",
+                "boolean_true_text": "Included",
+                "row_1_label": "Colour",
+                "row_1_field": "custom.tape_colour",
+                "row_1_option": "Color",
+                "row_2_label": "Rolls per pack",
+                "row_2_field": "custom.pack_quantity",
+                "row_2_option": "",
+                "row_3_label": "Width",
+                "row_3_field": "custom.tape_width",
+                "row_3_option": "",
+                "row_4_label": "Length per roll",
+                "row_4_field": "custom.tape_length",
+                "row_4_option": "",
+                "row_5_label": "Material",
+                "row_5_field": "custom.tape_material",
+                "row_5_option": "",
+                "row_6_label": "Printing",
+                "row_6_field": "custom.print_method",
+                "row_6_option": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "delivery_notice": {
+              "type": "mto-returns",
+              "name": "Delivery timing notice",
+              "settings": {
+                "heading": "Delivery timing",
+                "heading_tag": "h4",
+                "icon": "clipboard",
+                "body": "<p>This is a custom print run, not a stocked item, so it takes longer than our off-the-shelf products. Allow <strong>3-4 weeks</strong> from the moment your artwork is confirmed. You get tracking as soon as your order is on its way, and we will keep you posted if anything changes.</p>",
+                "link_label": "",
+                "policy_url": "",
+                "accent_color": "#E64A08",
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "returns_notice": {
+              "type": "mto-returns",
+              "name": "Returns notice",
+              "settings": {
+                "heading": "Returns on custom printed orders",
+                "heading_tag": "h4",
+                "icon": "return",
+                "body": "<p>Your tape is printed with your own logo, so it cannot be resold and we cannot accept returns or exchanges once you have approved the artwork and printing has started. Cancel free of charge within 24 hours of ordering, or any time before you approve your artwork. Misprinted, faulty or damaged rolls are replaced free: report them within 48 hours of delivery with photos of the rolls and the packaging.</p>",
+                "link_label": "Read the full returns policy",
+                "policy_url": "",
+                "accent_color": "#E64A08",
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "faq_accordion": {
+              "type": "accordion",
+              "name": "t:names.accordion",
+              "settings": {
+                "icon": "plus",
+                "dividers": true,
+                "type_preset": "h6"
+              },
+              "blocks": {
+                "row_delivery": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "How long does delivery take?",
+                    "open_by_default": true,
+                    "icon": "none"
+                  },
+                  "blocks": {
+                    "body": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "text": "<p>Allow 3-4 weeks from the point your artwork is confirmed. Custom printed tape is produced in a dedicated run for your order rather than picked from a shelf, which is what accounts for the longer wait. Tracking is sent as soon as your order is on its way.</p>",
+                        "width": "100%",
+                        "type_preset": "paragraph",
+                        "alignment": "left"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["body"]
+                },
+                "row_artwork": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "How do I send my logo?",
+                    "open_by_default": false,
+                    "icon": "none"
+                  },
+                  "blocks": {
+                    "body": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "text": "<p>Order first, then we will be in touch about your logo file. Vector artwork (AI, EPS or PDF) gives the sharpest result; a high-resolution PNG with a transparent background also works. Nothing is printed until you have confirmed how your logo will look.</p>",
+                        "width": "100%",
+                        "type_preset": "paragraph",
+                        "alignment": "left"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["body"]
+                },
+                "row_cancellation": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "Can I cancel or change my order?",
+                    "open_by_default": false,
+                    "icon": "none"
+                  },
+                  "blocks": {
+                    "body": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "text": "<p>Yes, free of charge within 24 hours of ordering, or any time before you approve your artwork. After approval the print run is under way and the order cannot be cancelled. Email us as soon as you can and we will tell you where your order stands.</p>",
+                        "width": "100%",
+                        "type_preset": "paragraph",
+                        "alignment": "left"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["body"]
+                },
+                "row_quality": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "What if the print is wrong?",
+                    "open_by_default": false,
+                    "icon": "none"
+                  },
+                  "blocks": {
+                    "body": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "text": "<p>If what arrives does not match the artwork you approved, or the rolls are damaged in transit, send us photos within 48 hours of delivery and we will reprint and reship at no cost to you.</p>",
+                        "width": "100%",
+                        "type_preset": "paragraph",
+                        "alignment": "left"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["body"]
+                }
+              },
+              "block_order": ["row_delivery", "row_artwork", "row_cancellation", "row_quality"]
+            },
+            "product_schema": {
+              "type": "mto-product-schema",
+              "name": "Made-to-order schema",
+              "settings": {
+                "brand_name": "Go Big Signs",
+                "availability": "InStock",
+                "production_min": 2,
+                "production_max": 3,
+                "shipping_min": 13,
+                "shipping_max": 17,
+                "shipping_country": "",
+                "shipping_rate": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "header_group",
+            "divider_top",
+            "variant_picker",
+            "buy_buttons",
+            "how_it_works",
+            "product_description",
+            "specs",
+            "delivery_notice",
+            "returns_notice",
+            "faq_accordion",
+            "product_schema"
+          ]
+        }
+      },
+      "settings": {
+        "content_width": "content-center-aligned",
+        "desktop_media_position": "left",
+        "equal_columns": false,
+        "limit_details_width": false,
+        "gap": 48,
+        "background_color": "{{ settings.color_palette.background }}",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "related_products": {
+      "type": "product-mto-related",
+      "settings": {
+        "heading": "You may also like",
+        "heading_tag": "h3",
+        "max_products": 4,
+        "collection_prefix": "",
+        "priority_handles": "",
+        "fallback_any_collection": true,
+        "show_collection_link": true,
+        "link_label": "View all"
+      },
+      "blocks": {},
+      "block_order": []
+    }
+  },
+  "order": ["main", "related_products"]
+}

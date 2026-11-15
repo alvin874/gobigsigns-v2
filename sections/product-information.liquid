@@ -1,12 +1,18 @@
 
 
 {%- comment -%}
-  The made-to-order template emits its own Product graph from
+  Templates listed here emit their own Product graph from
   blocks/mto-product-schema.liquid, because `structured_data` reports
   availability from inventory and carries no handling time. Skipping it
-  here keeps that page to a single Product graph.
+  for them keeps those pages to a single Product graph.
+
+  Add a template suffix to this list whenever you build a template that
+  carries the schema block, or that page will have two Product graphs.
 {%- endcomment -%}
-{%- unless template.suffix == 'made-to-order' -%}
+{%- liquid
+  assign own_schema_templates = 'made-to-order,extended-delivery' | split: ','
+-%}
+{%- unless own_schema_templates contains template.suffix -%}
   <script type="application/ld+json">
     {{ closest.product | structured_data }}
   </script>
