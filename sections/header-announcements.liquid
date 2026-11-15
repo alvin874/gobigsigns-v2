@@ -128,8 +128,41 @@
     margin: 0;
   }
 
+  /* Keep the three messages on one row; small screens can swipe or use arrow keys. */
+  @media screen and (max-width: 850px) {
+    .announcement-bar__slide:not(:has(.announcement-bar__disclaimer[open])) {
+      overflow-x: auto;
+      overflow-y: hidden;
+      place-content: start;
+      scrollbar-width: thin;
+    }
+
+    .announcement-bar__text {
+      white-space: nowrap;
+      width: max-content;
+    }
+
+    .announcement-bar__slide:has(.announcement-bar__disclaimer[open]) {
+      place-content: center;
+    }
+
+    .announcement-bar__text:has(.announcement-bar__disclaimer[open]) {
+      width: auto;
+      white-space: normal;
+    }
+
+    .announcement-bar__text:has(.announcement-bar__disclaimer[open]) .announcement-bar__other-messages {
+      display: none;
+    }
+  }
+
+  .announcement-bar__slide:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+  }
+
   .announcement-bar__disclaimer {
-    display: inline;
+    display: inline-block;
     position: static;
   }
 
