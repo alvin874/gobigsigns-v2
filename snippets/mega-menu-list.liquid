@@ -73,6 +73,7 @@
 %}
 <ul
   data-menu-list-id="{{ id }}"
+  {% if parent_link.handle == 'catalog' %}data-catalog-mega-menu{% endif %}
   class="mega-menu__list list-unstyled"
   style="--menu-image-border-radius: {{ image_border_radius }}px;"
 >
@@ -106,6 +107,9 @@
         echo '<li class="mega-menu__column ' | append: span_class | append: '">'
       endif
     %}
+    {% if parent_link.handle == 'catalog' and forloop.first %}
+      <p class="catalog-menu__group-title">Signs &amp; Displays</p>
+    {% endif %}
     <div>
       <a
         href="{{ link.url }}"
@@ -180,6 +184,18 @@
       endif
     %}
   {% endfor %}
+  {% if parent_link.handle == 'catalog' %}
+    {% capture catalog_collection_links %}
+      {% render 'header-packaging-links', menu: parent_link, variant: 'mega' %}
+    {% endcapture %}
+    {% assign catalog_collection_links = catalog_collection_links | strip %}
+    {% if catalog_collection_links != blank %}
+      <li class="mega-menu__column">
+        <p class="catalog-menu__group-title">Print &amp; Replacement Graphics</p>
+        <ul class="list-unstyled">{{ catalog_collection_links }}</ul>
+      </li>
+    {% endif %}
+  {% endif %}
 </ul>
 
 {% liquid

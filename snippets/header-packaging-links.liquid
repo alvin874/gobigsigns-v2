@@ -1,9 +1,10 @@
 {%- doc -%}
-  Adds the published label and packaging collections to header navigation.
-  Existing configured links are retained; duplicate collection links are skipped.
+  Adds published collections inside Catalog's mega menu or mobile child list.
+  Configured Catalog links are retained; nested duplicate URLs are skipped.
+  Does not render standalone top-level navigation links.
 
-  @param {linklist} menu - The configured header menu.
-  @param {string} variant - desktop, drawer, or navigation_bar.
+  @param {linklist} menu - The Catalog parent link.
+  @param {string} variant - mega or drawer-child.
 {%- enddoc -%}
 {%- liquid
   assign collection_handles = 'custom-roll-labels|print-packaging|replacement-graphics' | split: '|'
@@ -32,32 +33,20 @@
   -%}
   {%- if target_collection != blank and already_linked == false -%}
     {%- case variant -%}
-      {%- when 'drawer' -%}
-        <li class="menu-drawer__list-item" style="--menu-drawer-animation-index: {{ menu.links.size | plus: forloop.index }};">
+      {%- when 'drawer-child' -%}
+        <li class="menu-drawer__list-item" style="--menu-drawer-animation-index: {{ menu.links.size | plus: forloop.index }};" data-catalog-collection-link>
           <a
             href="{{ target_collection.url }}"
-            class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element"
+            class="menu-drawer__menu-item menu-drawer__menu-item--child menu-drawer__animated-element"
             {% if request.path == target_collection.url %}aria-current="page"{% endif %}
           >
             <span class="menu-drawer__menu-item-text wrap-text">{{ link_title | escape }}</span>
           </a>
         </li>
-      {%- when 'navigation_bar' -%}
-        <li>
-          <a href="{{ target_collection.url }}" class="menu-list__item" {% if request.path == target_collection.url %}aria-current="page"{% endif %}>
-            {{- link_title | escape -}}
-          </a>
-        </li>
-      {%- else -%}
-        <li class="menu-list__list-item" on:blur="/deactivate" on:pointerenter="/activate" on:pointerleave="/deactivate">
-          <a
-            href="{{ target_collection.url }}"
-            class="menu-list__link"
-            ref="menuitem"
-            data-skip-node-update="true"
-            {% if request.path == target_collection.url %}aria-current="page"{% endif %}
-          >
-            <span class="menu-list__link-title">{{ link_title | escape }}</span>
+      {%- when 'mega' -%}
+        <li data-catalog-collection-link>
+          <a href="{{ target_collection.url }}" class="mega-menu__link" {% if request.path == target_collection.url %}aria-current="page"{% endif %}>
+            <span class="wrap-text">{{ link_title | escape }}</span>
           </a>
         </li>
     {%- endcase -%}
