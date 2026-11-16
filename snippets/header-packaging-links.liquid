@@ -1,0 +1,65 @@
+{%- doc -%}
+  Adds the published label and packaging collections to header navigation.
+  Existing configured links are retained; duplicate collection links are skipped.
+
+  @param {linklist} menu - The configured header menu.
+  @param {string} variant - desktop, drawer, or navigation_bar.
+{%- enddoc -%}
+{%- liquid
+  assign collection_handles = 'custom-roll-labels|print-packaging' | split: '|'
+  assign collection_titles = 'Labels & Stickers|Print & Packaging' | split: '|'
+-%}
+{%- for collection_handle in collection_handles -%}
+  {%- liquid
+    assign target_collection = collections[collection_handle]
+    assign already_linked = false
+    for configured_link in menu.links
+      if configured_link.url == target_collection.url
+        assign already_linked = true
+      endif
+      for child_link in configured_link.links
+        if child_link.url == target_collection.url
+          assign already_linked = true
+        endif
+        for grandchild_link in child_link.links
+          if grandchild_link.url == target_collection.url
+            assign already_linked = true
+          endif
+        endfor
+      endfor
+    endfor
+    assign link_title = collection_titles[forloop.index0]
+  -%}
+  {%- if target_collection != blank and already_linked == false -%}
+    {%- case variant -%}
+      {%- when 'drawer' -%}
+        <li class="menu-drawer__list-item" style="--menu-drawer-animation-index: {{ menu.links.size | plus: forloop.index }};">
+          <a
+            href="{{ target_collection.url }}"
+            class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element"
+            {% if request.path == target_collection.url %}aria-current="page"{% endif %}
+          >
+            <span class="menu-drawer__menu-item-text wrap-text">{{ link_title | escape }}</span>
+          </a>
+        </li>
+      {%- when 'navigation_bar' -%}
+        <li>
+          <a href="{{ target_collection.url }}" class="menu-list__item" {% if request.path == target_collection.url %}aria-current="page"{% endif %}>
+            {{- link_title | escape -}}
+          </a>
+        </li>
+      {%- else -%}
+        <li class="menu-list__list-item" on:blur="/deactivate" on:pointerenter="/activate" on:pointerleave="/deactivate">
+          <a
+            href="{{ target_collection.url }}"
+            class="menu-list__link"
+            ref="menuitem"
+            data-skip-node-update="true"
+            {% if request.path == target_collection.url %}aria-current="page"{% endif %}
+          >
+            <span class="menu-list__link-title">{{ link_title | escape }}</span>
+          </a>
+        </li>
+    {%- endcase -%}
+  {%- endif -%}
+{%- endfor -%}
