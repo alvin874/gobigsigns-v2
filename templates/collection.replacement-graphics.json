@@ -445,11 +445,16 @@
         "padding-block-start": 0,
         "padding-block-end": 32
       }
+    },
+    "replacement_guide": {
+      "type": "replacement-graphics-guide",
+      "settings": {}
     }
   },
   "order": [
     "collection_hero_gb",
     "section",
-    "main"
+    "main",
+    "replacement_guide"
   ]
 }
