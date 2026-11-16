@@ -1,0 +1,148 @@
+{%- if collection.handle == 'replacement-graphics' -%}
+  <section class="replacement-guide" data-replacement-guide aria-labelledby="replacement-guide-title-{{ section.id }}">
+    <div class="replacement-guide__inner">
+      <header class="replacement-guide__intro">
+        <p class="replacement-guide__eyebrow">Before you replace your artwork</p>
+        <h2 id="replacement-guide-title-{{ section.id }}">A new campaign does not always need new hardware</h2>
+        <p>A replacement graphic lets you update the message on a compatible display you already own. The important part is matching the printed fabric to the exact frame, pole or canopy—not simply choosing the same advertised size.</p>
+      </header>
+
+      <div class="replacement-guide__image-block">
+        {%- if collection.image != blank -%}
+          <figure>
+            {{ collection.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '480, 720, 960, 1280, 1600', sizes: '(max-width: 749px) 100vw, 900px', alt: collection.image.alt }}
+            <figcaption>Illustrative replacement fabric graphics. Hardware is not included; actual construction depends on the selected display system.</figcaption>
+          </figure>
+        {%- endif -%}
+      </div>
+
+      <div class="replacement-guide__layout">
+        <div>
+          <h3>Choose the right type of replacement</h3>
+          <div class="replacement-guide__types">
+            <article>
+              <h4>SEG lightbox graphics</h4>
+              <p>Silicone-edge graphics need the correct frame profile, panel position and finishing. A front panel that wraps around the endcaps is different from a rear panel. Confirm whether you need the front, back or both, and use the matching backlit artwork template.</p>
+              <a href="{{ routes.root_url }}products/seg-pop-up-lightbox-8ft?variant=49069025263844">View the 8ft front-graphic option</a>
+            </article>
+            <article>
+              <h4>Replacement feather flags</h4>
+              <p>Match the flag shape and pole system as well as the size designation. The advertised 14ft height describes the assembled system, not the fabric's artwork dimensions. Single-sided and double-sided printing are separate choices; the linked replacement includes no pole or base.</p>
+              <a href="{{ routes.root_url }}products/feather-flag-large-14-ft?variant=49076686749924">View the 14ft single-sided flag option</a>
+            </article>
+            <article>
+              <h4>Fabric tube display sleeves</h4>
+              <p>A sewn sleeve must match the straight or curved frame, corner shape and zipper position. A narrow vertical banner sleeve is not a substitute for a wide backwall graphic. For our 10ft single-sided option, confirm the backing and finishing before preparing the artwork.</p>
+              <a href="{{ routes.root_url }}products/10ft-fabric-tube-display?variant=49076673380580">View the 10ft single-sided sleeve option</a>
+            </article>
+            <article>
+              <h4>Canopy replacement tops</h4>
+              <p>A matching footprint alone does not establish fit. Roof shape, peak height, valance and attachment points can vary between frames. The linked option is a canopy top with black trim for the matching aluminum system—not a frame, backwall or sidewall.</p>
+              <a href="{{ routes.root_url }}products/10ft-aluminum-canopy-tent?variant=49076668268772">View the black-trim canopy-top option</a>
+            </article>
+          </div>
+        </div>
+
+        <aside class="replacement-guide__checklist" aria-labelledby="replacement-checklist-title-{{ section.id }}">
+          <h3 id="replacement-checklist-title-{{ section.id }}">Not sure which graphic fits?</h3>
+          <p>Contact us before ordering. These details help us check the right configuration:</p>
+          <ul>
+            <li>Your original Go Big Signs order number, if available.</li>
+            <li>The hardware brand, model code and size.</li>
+            <li>Photos of the assembled frame or pole and its connection points.</li>
+            <li>Photos of the existing graphic, edging, zipper or attachments.</li>
+            <li>The printed side, trim or backing you need.</li>
+            <li>Your delivery location and event date, if timing matters.</li>
+          </ul>
+          <p><strong>These replacements are not universal-fit products.</strong> If you bought the hardware elsewhere, send its model details rather than ordering by nominal dimensions alone.</p>
+          <a class="replacement-guide__contact" href="{{ routes.root_url }}pages/contact">Help me identify my display</a>
+        </aside>
+      </div>
+
+      <div class="replacement-guide__artwork">
+        <h3>From hardware check to approved artwork</h3>
+        <ol>
+          <li><strong>Confirm the system and option.</strong> Check the exact hardware model and whether you need a front panel, rear panel, flag, sleeve or canopy top.</li>
+          <li><strong>Prepare the matching template.</strong> Follow its document scale, safe area and bleed instructions. Do not use assembled display dimensions as the print size or copy bleed settings from another product.</li>
+          <li><strong>Send and approve your design.</strong> Reply to your order confirmation email with your artwork. Production begins only after you approve the design.</li>
+        </ol>
+      </div>
+
+      <div class="replacement-guide__faqs">
+        <h3>Replacement graphic questions</h3>
+        <details>
+          <summary>Does a replacement graphic include hardware?</summary>
+          <p>No. The graphic-only options linked here do not include the frame, lights, poles, base or carry bag. Product pages also offer complete packages, so check the selected option before adding it to your cart. Photos may show an assembled display for reference.</p>
+        </details>
+        <details>
+          <summary>Will it fit another brand with the same dimensions?</summary>
+          <p>Not necessarily. Similar advertised sizes can use different frame profiles, pole shapes, sewn patterns or roof attachments. Send us the model information and photos before ordering; a shared nominal size is not a compatibility guarantee.</p>
+        </details>
+        <details>
+          <summary>Can I reuse artwork from my previous order?</summary>
+          <p>You can send your previous artwork for review, but confirm the current replacement template first. A different panel, printed side or hardware version can require a different layout. Keep essential text and logos inside the template's safe areas.</p>
+        </details>
+        <details>
+          <summary>How do I send my design?</summary>
+          <p>Reply to your order confirmation email with your design. Include the order reference and the replacement configuration if you are discussing more than one graphic. We only begin production once the design is approved.</p>
+        </details>
+        <details>
+          <summary>How long will production and delivery take?</summary>
+          <p>Ask us to confirm timing for your exact configuration and delivery address. Production starts after artwork approval, and shipping transit is additional. If you have an event deadline, contact us before ordering rather than assuming every replacement shares one delivery window.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+  .replacement-guide { padding: 56px 24px; background: #f8f7f5; color: #0c1e3c; }
+  .replacement-guide__inner { max-width: 1280px; margin-inline: auto; }
+  .replacement-guide__intro { max-width: 800px; margin-bottom: 36px; }
+  .replacement-guide__eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  .replacement-guide h2 { margin: 12px 0 20px; font-size: clamp(28px, 3vw, 42px); line-height: 1.15; }
+  .replacement-guide h3 { margin: 0 0 18px; font-size: 24px; line-height: 1.3; }
+  .replacement-guide h4 { margin: 0 0 10px; font-size: 18px; line-height: 1.35; }
+  .replacement-guide p,
+  .replacement-guide li { font-size: 15px; line-height: 1.75; }
+  .replacement-guide a { color: inherit; text-underline-offset: 3px; }
+  .replacement-guide a:focus-visible,
+  .replacement-guide summary:focus-visible { outline: 3px solid #e64a08; outline-offset: 4px; }
+  .replacement-guide__image-block figure { max-width: 900px; margin: 0 0 36px; }
+  .replacement-guide__image-block img { display: block; width: 100%; height: auto; border: 1px solid #d6d6dc; border-radius: 8px; }
+  .replacement-guide__image-block figcaption { margin-top: 10px; font-size: 12px; line-height: 1.5; }
+  .replacement-guide__layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+  .replacement-guide__types { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+  .replacement-guide__types article { padding-top: 20px; border-top: 1px solid #d6d6dc; }
+  .replacement-guide__types p { margin: 0 0 14px; }
+  .replacement-guide__types a { display: inline-block; padding-block: 8px; font-size: 14px; font-weight: 600; }
+  .replacement-guide__checklist { padding: 28px; background: #0c1e3c; color: #fff; border-radius: 8px; }
+  .replacement-guide__checklist h3 { color: #fff; }
+  .replacement-guide__checklist ul { padding-left: 20px; }
+  .replacement-guide__checklist li + li { margin-top: 10px; }
+  .replacement-guide__contact { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; }
+  .replacement-guide__artwork { margin-top: 44px; padding-block: 28px; border-top: 1px solid #d6d6dc; border-bottom: 1px solid #d6d6dc; }
+  .replacement-guide__artwork ol { padding-left: 22px; }
+  .replacement-guide__artwork li + li { margin-top: 14px; }
+  .replacement-guide__faqs { max-width: 900px; margin-top: 40px; }
+  .replacement-guide__faqs details { border-bottom: 1px solid #d6d6dc; }
+  .replacement-guide__faqs summary { min-height: 48px; padding-block: 16px; font-size: 16px; font-weight: 600; cursor: pointer; }
+  .replacement-guide__faqs details p { margin: 0; padding-bottom: 20px; }
+  @media (max-width: 989px) {
+    .replacement-guide__layout { grid-template-columns: 1fr; gap: 32px; }
+  }
+  @media (max-width: 599px) {
+    .replacement-guide { padding: 40px 20px; }
+    .replacement-guide__types { grid-template-columns: 1fr; }
+    .replacement-guide__checklist { padding: 22px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Replacement buying guide",
+  "enabled_on": { "templates": ["collection"] },
+  "settings": [],
+  "presets": [{ "name": "Replacement buying guide" }]
+}
+{% endschema %}
