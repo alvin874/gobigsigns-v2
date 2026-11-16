@@ -1,0 +1,50 @@
+{%- doc -%}
+  Graphic-only card for the curated replacement-graphics collection.
+  Resolve an existing exact variant; prices and availability stay market-aware.
+  Never fall back to a hardware package if a mapped variant is removed.
+
+  @param {product} product - The collection product.
+{%- enddoc -%}
+{%- liquid
+  assign replacement_variant_id = 0
+  case product.handle
+    when 'seg-pop-up-lightbox-8ft'
+      assign replacement_variant_id = 49069025263844
+    when 'feather-flag-large-14-ft'
+      assign replacement_variant_id = 49076686749924
+    when '10ft-fabric-tube-display'
+      assign replacement_variant_id = 49076673380580
+    when '10ft-aluminum-canopy-tent'
+      assign replacement_variant_id = 49076668268772
+  endcase
+  assign replacement_variant = product.variants | where: 'id', replacement_variant_id | first
+-%}
+{%- if replacement_variant != blank -%}
+  {%- liquid
+    assign replacement_url = replacement_variant.url
+    assign card_image = replacement_variant.featured_image | default: product.featured_image
+    assign image_alt = product.title | append: ' — ' | append: replacement_variant.title | append: '. Hardware shown for reference; not included.'
+  -%}
+  <article class="replacement-card" data-replacement-variant="{{ replacement_variant.id }}">
+    <a class="replacement-card__image" href="{{ replacement_url }}" aria-label="{{ product.title | escape }} — {{ replacement_variant.title | escape }}">
+      {%- if card_image != blank -%}
+        {{ card_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '240, 360, 540, 720, 900', sizes: '(max-width: 749px) 45vw, (max-width: 1024px) 45vw, 30vw', alt: image_alt }}
+      {%- endif -%}
+      <span class="replacement-card__badge">Graphic only</span>
+    </a>
+    <div class="replacement-card__details">
+      <h2 class="replacement-card__title"><a href="{{ replacement_url }}">{{ product.title | escape }}</a></h2>
+      <p class="replacement-card__option">{{ replacement_variant.title | escape }}</p>
+      <p class="replacement-card__price">{{ replacement_variant.price | money_with_currency }}</p>
+      <p class="replacement-card__note">Hardware not included. Images may show the assembled system for reference.</p>
+      <a class="replacement-card__button" href="{{ replacement_url }}">
+        {%- if replacement_variant.available -%}Choose replacement graphic{%- else -%}View replacement availability{%- endif -%}
+      </a>
+    </div>
+  </article>
+{%- else -%}
+  <article class="replacement-card replacement-card--unconfirmed">
+    <h2 class="replacement-card__title">{{ product.title | escape }}</h2>
+    <p>Replacement option needs confirmation. Contact us before ordering; no hardware-package price is shown here.</p>
+  </article>
+{%- endif -%}
