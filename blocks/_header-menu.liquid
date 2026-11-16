@@ -59,7 +59,7 @@
                 </a>
               </li>
             {% endfor %}
-            {% render 'header-packaging-links', menu: block_settings.menu, variant: 'navigation_bar' %}
+
           </ul>
         </div>
       </div>
@@ -170,7 +170,7 @@
           {%- endif -%}
         </li>
       {% endfor %}
-      {% render 'header-packaging-links', menu: block_settings.menu, variant: 'desktop' %}
+
       <li
         class="menu-list__list-item"
         slot="more"
@@ -458,6 +458,28 @@
   }
 
   /** mega menu **/
+  .mega-menu__list[data-catalog-mega-menu] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mega-menu__list[data-catalog-mega-menu] > .mega-menu__column {
+    grid-column: span 1;
+  }
+
+  .catalog-menu__group-title {
+    margin: 0 0 12px;
+    font-family: var(--menu-parent-font-family);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--menu-parent-font-color);
+  }
+
+  .mega-menu__list[data-catalog-mega-menu] .mega-menu__link {
+    min-height: 44px;
+    align-items: center;
+  }
+
   .menu-list__submenu,
   .overflow-menu::part(overflow) {
     --submenu-padding-block-start: var(--padding-3xl);

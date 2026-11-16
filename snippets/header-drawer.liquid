@@ -179,6 +179,9 @@
                             </a>
                           </li>
                         {%- endfor -%}
+                        {% if link.handle == 'catalog' %}
+                          {% render 'header-packaging-links', menu: link, variant: 'drawer-child' %}
+                        {% endif %}
                       </ul>
                     </details>
                   {% endcapture %}
@@ -239,6 +242,9 @@
                         </a>
                       </li>
                     {%- endfor -%}
+                    {% if link.handle == 'catalog' %}
+                      {% render 'header-packaging-links', menu: link, variant: 'drawer-child' %}
+                    {% endif %}
                   </ul>
                 {% else %}
                   {%- comment -%}
@@ -513,6 +519,9 @@
                               {%- endif -%}
                             </li>
                           {%- endfor -%}
+                          {% if link.handle == 'catalog' %}
+                            {% render 'header-packaging-links', menu: link, variant: 'drawer-child' %}
+                          {% endif %}
                         </ul>
                         {% liquid
                           if eager_loading
@@ -587,7 +596,7 @@
               </li>
             {%- endfor -%}
           {% endif %}
-          {% render 'header-packaging-links', menu: linklist, variant: 'drawer' %}
+
         </ul>
       </nav>
       <div
