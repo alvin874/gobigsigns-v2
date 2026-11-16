@@ -118,7 +118,18 @@
                   {% render 'cart-summary', section_id: 'cart-drawer-section' %}
                   <p class="cart-drawer__trust-line">
                     <span class="svg-wrapper">{{- 'icon-checkmark.svg' | inline_asset_content -}}</span>
-                    Free proof, made to order in {% render 'market-terms', term: 'origin' %}. Ships in 5-7 days, free over $200.
+                    {%- assign has_custom_labels = false -%}
+                    {%- for item in cart.items -%}
+                      {%- if item.product.template_suffix == 'custom-labels' -%}
+                        {%- assign has_custom_labels = true -%}
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                    {%- if has_custom_labels -%}
+                      Custom labels ship in 8–10 business days after artwork approval; transit is additional. Other items may ship separately.
+                    {%- else -%}
+                      Free proof, made to order in {% render 'market-terms', term: 'origin' %}. Ships in 5-7 days, free over $200.
+                    {%- endif -%}
                   </p>
                 </div>
               </scroll-hint>
