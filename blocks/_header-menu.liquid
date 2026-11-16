@@ -458,6 +458,19 @@
   }
 
   /** mega menu **/
+  /* Catalog uses its expanded disclosure as the source of truth. Keep the
+     clickable panel independent of the generic animated header-height clip. */
+  .menu-list__list-item:has(> .menu-list__trigger [aria-expanded='true'])
+    > .menu-list__submenu:has([data-catalog-mega-menu]) {
+    top: 100%;
+    clip-path: none;
+    background-color: var(--color-background, #fff);
+  }
+
+  .menu-list__submenu:has([data-catalog-mega-menu]) .menu-list__submenu-inner {
+    transform: none;
+  }
+
   .mega-menu__list[data-catalog-mega-menu] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
