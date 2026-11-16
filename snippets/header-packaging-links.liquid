@@ -6,8 +6,8 @@
   @param {string} variant - desktop, drawer, or navigation_bar.
 {%- enddoc -%}
 {%- liquid
-  assign collection_handles = 'custom-roll-labels|print-packaging' | split: '|'
-  assign collection_titles = 'Labels & Stickers|Print & Packaging' | split: '|'
+  assign collection_handles = 'custom-roll-labels|print-packaging|replacement-graphics' | split: '|'
+  assign collection_titles = 'Labels & Stickers|Print & Packaging|Replacement Graphics' | split: '|'
 -%}
 {%- for collection_handle in collection_handles -%}
   {%- liquid

@@ -30,6 +30,9 @@
 %}
 
 {% render 'collection-wrapper-styles' %}
+{% if collection.handle == 'replacement-graphics' and collection.template_suffix == 'replacement-graphics' %}
+  {{ 'replacement-graphic-cards.css' | asset_url | stylesheet_tag }}
+{% endif %}
 
 <div
   class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
@@ -70,12 +73,16 @@
               data-product-id="{{ product.id }}"
               ref="cards[]"
             >
-              {% content_for 'block',
-                type: '_product-card',
-                id: 'product-card',
-                closest.product: product,
-                product_view_context: 'collection'
-              %}
+              {% if collection.handle == 'replacement-graphics' and collection.template_suffix == 'replacement-graphics' %}
+                {% render 'replacement-graphic-card', product: product %}
+              {% else %}
+                {% content_for 'block',
+                  type: '_product-card',
+                  id: 'product-card',
+                  closest.product: product,
+                  product_view_context: 'collection'
+                %}
+              {% endif %}
             </li>
           {% endfor %}
         {% endcapture %}
