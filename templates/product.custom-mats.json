@@ -480,7 +480,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>Supplier ships from China</p>",
+                        "text": "<p>Personalized with your logo</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -536,7 +536,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>Production timing is confirmed for your selected size, color and decoration after artwork approval. Shipping time is additional and varies by destination and available carrier service. The supplier ships from China; this is not a local-stock item. Confirm availability, shipping charges and the estimated delivery window with us before ordering, especially if you have a deadline.</p>",
+                        "text": "<p>Production timing is confirmed for your selected size, color and decoration after artwork approval. Shipping time is additional and varies by destination and available carrier service. Confirm availability, shipping charges and the estimated delivery window with us before ordering, especially if you have a deadline.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
